@@ -7,7 +7,7 @@
 <meta name="referrer" content="no-referrer">
 <title>Tom Ebert · AI &amp; Data</title>
 <link rel="icon" href="./favicon.ico" sizes="16x16 32x32 48x48">
-<link rel="stylesheet" href="site-sparks.css">
+<link rel="stylesheet" href="site-prism.css">
 </head>
 <body>
 <main>
@@ -107,19 +107,22 @@ portraitButton.addEventListener("click", (event) => {
   burst.style.top = y + "px";
 
   if (!reducedMotion.matches && !root.hasAttribute("data-motion-paused")) {
-    for (let index = 0; index < 20; index++) {
+    const reach = Math.hypot(bounds.width, bounds.height) * .48;
+    burst.style.setProperty("--reach", reach + "px");
+    for (let index = 0; index < 72; index++) {
       const spark = document.createElement("i");
-      const angle = index * 18 + Math.random() * 12;
+      const angle = index * 137.5 + Math.random() * 12;
       spark.style.setProperty("--angle", angle + "deg");
-      spark.style.setProperty("--distance", 36 + Math.random() * 105 + "px");
-      spark.style.setProperty("--duration", 360 + Math.random() * 260 + "ms");
+      spark.style.setProperty("--distance", reach * (.15 + Math.random() * .85) + "px");
+      spark.style.setProperty("--duration", 520 + Math.random() * 430 + "ms");
+      spark.style.setProperty("--delay", index % 3 * 65 + "ms");
       burst.append(spark);
     }
   }
 
   portraitButton.replaceChildren(burst);
   window.clearTimeout(clearBurst);
-  clearBurst = window.setTimeout(() => burst.remove(), 700);
+  clearBurst = window.setTimeout(() => burst.remove(), 1200);
 });
 portraitButton.hidden = false;
 
