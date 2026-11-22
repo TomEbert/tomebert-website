@@ -7,7 +7,7 @@
 <meta name="referrer" content="no-referrer">
 <title>Tom Ebert · AI &amp; Data</title>
 <link rel="icon" href="./favicon.ico" sizes="16x16 32x32 48x48">
-<link rel="stylesheet" href="site-terminal.css">
+<link rel="stylesheet" href="site-crt.css">
 </head>
 <body>
 <main>
@@ -16,10 +16,12 @@
 <svg class="theme-icon theme-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 14A8.6 8.6 0 0 1 10 3.5a8.6 8.6 0 1 0 10.5 10.5Z"/></svg>
 </button><button class="motion-toggle" type="button" aria-pressed="false" aria-label="Animationen pausieren" data-en-label="Pause animations" hidden></button></div></nav>
 <header>
-<div><div class="terminal-name">
+<div><div class="terminal-name"><div class="terminal-screen">
 <span class="terminal-path" aria-hidden="true">~/profile</span>
 <h1><span class="terminal-prompt" aria-hidden="true">❯</span>Tom Ebert<span class="terminal-caret" aria-hidden="true"></span></h1>
-</div><p class="field">AI &amp; Data Consultant</p><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p>
+<p class="field">AI &amp; Data Consultant</p>
+<span class="terminal-signal" aria-hidden="true"></span>
+</div></div><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p>
 <p class="current"><span data-en="Currently">Aktuell</span><strong>INFOMOTION</strong></p>
 </div>
 <figure class="portrait-frame">
@@ -94,6 +96,7 @@ motionToggle.addEventListener("click", () => {
 motionToggle.hidden = false;
 
 const portraitButton = document.querySelector(".portrait-trigger");
+const terminalSignal = document.querySelector(".terminal-signal");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 let clearBurst;
 
@@ -124,8 +127,12 @@ portraitButton.addEventListener("click", (event) => {
   }
 
   portraitButton.replaceChildren(burst);
+  terminalSignal.replaceChildren(document.createElement("span"));
   window.clearTimeout(clearBurst);
-  clearBurst = window.setTimeout(() => burst.remove(), 1200);
+  clearBurst = window.setTimeout(() => {
+    burst.remove();
+    terminalSignal.replaceChildren();
+  }, 1200);
 });
 portraitButton.hidden = false;
 
