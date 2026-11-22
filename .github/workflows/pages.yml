@@ -1,0 +1,119 @@
+name: Publish Pages and PR previews
+
+on:
+  push:
+    branches: [main]
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened, closed]
+  workflow_dispatch:
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  package:
+    if: github.event_name != 'pull_request_target' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      preview_numbers: ${{ steps.assemble.outputs.preview_numbers }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Assemble production and previews
+        id: assemble
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          mkdir -p public
+          git archive HEAD:site | tar -x -C public
+
+          # Read same-repository PR files as static content. Never run code from a PR.
+          gh api --paginate "repos/$GITHUB_REPOSITORY/pulls?state=open&base=main&per_page=100" \
+            --jq '.[] | select(.head.repo.full_name == .base.repo.full_name) | [.number, .head.sha] | @tsv' > previews.tsv
+
+          while IFS=$'\t' read -r number sha; do
+            git fetch --no-tags --depth=1 origin "$sha"
+            destination="public/pr-preview/pr-$number"
+            mkdir -p "$destination"
+
+            if git cat-file -e "$sha:site/index.html" 2>/dev/null; then
+              git archive "$sha:site" | tar -x -C "$destination"
+            else
+              # Also support branches created before the site directory moved.
+              git ls-tree -z --name-only "$sha" | while IFS= read -r -d '' file; do
+                case "$file" in
+                  *.html|*.css|*.js|*.svg|*.png|*.webp|*.ico)
+                    git archive "$sha" -- "$file" | tar -x -C "$destination"
+                    ;;
+                esac
+              done
+            fi
+
+            test -f "$destination/index.html"
+          done < previews.tsv
+
+          preview_numbers=$(cut -f1 previews.tsv | jq -Rsc 'split("\n") | map(select(length > 0))')
+          echo "preview_numbers=$preview_numbers" >> "$GITHUB_OUTPUT"
+
+          if find public -type l -print -quit | grep -q .; then
+            echo "Symbolic links are not supported in Pages output."
+            exit 1
+          fi
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: package
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    outputs:
+      page_url: ${{ steps.pages.outputs.page_url }}
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: pages
+
+  link-previews:
+    needs: [package, deploy]
+    if: needs.package.outputs.preview_numbers != '[]'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Add or update the preview link on each pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAGE_URL: ${{ needs.deploy.outputs.page_url }}
+          PREVIEW_NUMBERS: ${{ needs.package.outputs.preview_numbers }}
+        run: |
+          set -euo pipefail
+          marker='<!-- pages-pr-preview -->'
+
+          while read -r number; do
+            preview_url="${PAGE_URL%/}/pr-preview/pr-$number/"
+            body=$(printf '%s\n[Website-Vorschau öffnen](%s)' "$marker" "$preview_url")
+            endpoint="repos/$GITHUB_REPOSITORY/issues/$number/comments"
+            comment_id=$(gh api --paginate "$endpoint" \
+              --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | startswith("<!-- pages-pr-preview -->"))) | .id' | sed -n '1p')
+
+            if [ -n "$comment_id" ]; then
+              gh api --silent --method PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$comment_id" -f body="$body"
+            else
+              gh api --silent --method POST "$endpoint" -f body="$body"
+            fi
+          done < <(jq -r '.[]' <<< "$PREVIEW_NUMBERS")
