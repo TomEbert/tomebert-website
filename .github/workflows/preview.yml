@@ -1,0 +1,29 @@
+name: Package PR preview
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check preview contents
+        run: |
+          test -f site/index.html
+          test -z "$(find site -type l -print -quit)"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: site-preview
+          path: site/
+          if-no-files-found: error
+          retention-days: 7
+      - name: Explain how to open the preview
+        run: |
+          echo 'Download site-preview from this run and extract it. Serve the extracted directory on a local HTTP server.' >> "$GITHUB_STEP_SUMMARY"

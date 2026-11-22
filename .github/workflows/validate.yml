@@ -3,8 +3,7 @@ name: Validate site
 on:
   pull_request:
     branches: [main]
-  push:
-    branches: [main]
+  workflow_call:
 
 permissions:
   contents: read
@@ -18,7 +17,9 @@ jobs:
         working-directory: site
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
 
       - name: Validate HTML structure
         run: |
@@ -36,9 +37,18 @@ jobs:
                   self.html = False
                   self.body = False
                   self.script = 0
-                  self.errors = []
+                  self.ids = set()
+                  self.references = set()
 
               def handle_starttag(self, tag, attrs):
+                  attributes = dict(attrs)
+                  element_id = attributes.get("id")
+                  if element_id:
+                      if element_id in self.ids:
+                          raise SystemExit(f"Duplicate element ID: {element_id}")
+                      self.ids.add(element_id)
+                  for attribute in ("aria-controls", "aria-labelledby", "aria-describedby"):
+                      self.references.update(attributes.get(attribute, "").split())
                   if tag == "html":
                       self.html = True
                   elif tag == "body":
@@ -58,6 +68,10 @@ jobs:
           if validator.script != 0:
               raise SystemExit("Unbalanced script tags")
 
+          missing_ids = validator.references - validator.ids
+          if missing_ids:
+              raise SystemExit(f"Unresolved accessibility references: {sorted(missing_ids)}")
+
           print("Site validation passed")
           PY
 
@@ -75,9 +89,10 @@ jobs:
           assets = re.findall(r'(?:src|href)="([^"]+)"', html)
 
           for asset in assets:
-              if "://" in asset or asset.startswith("mailto:") or asset.startswith("#"):
+              url = urlsplit(asset)
+              if url.scheme in ("https", "mailto") or asset.startswith("#"):
                   continue
-              if not Path(urlsplit(asset).path).is_file():
+              if url.scheme or url.netloc or not Path(url.path).is_file():
                   raise SystemExit(f"Referenced asset is missing: {asset}")
 
           for stylesheet in Path("assets/css").rglob("*.css"):
