@@ -14,7 +14,9 @@ a:hover {color:var(--accent)}
 :focus-visible {outline:2px solid var(--accent);outline-offset:5px}
 nav,.nav-links,.language {display:flex;align-items:center;gap:1rem}
 nav {justify-content:space-between;border-bottom:1px solid var(--line);min-height:4.25rem;flex-wrap:wrap;font-size:.875rem}
-nav>span,.language,.current span,.location {font-family:ui-monospace,monospace}
+.site-brand,.language,.current span,.location {font-family:ui-monospace,monospace}
+.site-brand {display:inline-flex;align-items:center;gap:.5rem}
+.site-brand img {display:block;flex:none}
 .location {color:var(--muted)}
 .language {gap:.25rem;border:1px solid var(--line);padding:.2rem}
 .theme-toggle {
@@ -205,7 +207,6 @@ main > header::before, main > .skills::before, main > .background::before {
 
 @media (max-width:630px) {
   nav {padding-block:.6rem;gap:.55rem}
-  nav > span {display:none}
   .nav-links {gap:.45rem .65rem}
   .location {flex-basis:100%}
   main > header, main > .skills, main > .background {
