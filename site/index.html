@@ -7,7 +7,7 @@
 <meta name="referrer" content="no-referrer">
 <title>Tom Ebert · AI &amp; Data</title>
 <link rel="icon" href="./favicon.ico" sizes="16x16 32x32 48x48">
-<link rel="stylesheet" href="site-circuit.css">
+<link rel="stylesheet" href="site-portrait.css">
 </head>
 <body>
 <main>
@@ -21,24 +21,15 @@
 </div>
 <figure class="portrait-frame">
 <img class="portrait" src="tom-ebert.webp" width="800" height="1199" alt="Tom Ebert bei einem Vortrag" data-en-alt="Tom Ebert giving a talk">
+<button class="portrait-trigger" type="button" aria-label="Lichteffekt am Bühnenfoto" data-en-label="Stage photo lighting effect" aria-pressed="false" hidden></button>
 <span class="portrait-signal" aria-hidden="true"></span>
 </figure>
 </header>
 <section class="skills" aria-labelledby="skills">
 <h2 id="skills" data-en="What I do">Was ich mache</h2>
-<details class="skill" name="skills" open><summary><span data-en="AI applications">KI-Anwendungen</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I build prototypes with Claude and connect tools and data sources through MCP.">Ich baue Prototypen mit Claude und schließe Tools und Datenquellen über MCP an.</p><p class="skill-detail">Tools · MCP · Claude</p></details>
-<details class="skill" name="skills"><summary><span>Data Engineering</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I model data in Snowflake and write SQL transformations with dbt.">Ich modelliere Daten in Snowflake und schreibe SQL-Transformationen mit dbt.</p><p class="skill-detail">Snowflake · SQL · dbt</p></details>
-<details class="skill" name="skills"><summary><span data-en="CI/CD for data pipelines">CI/CD für Datenpipelines</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I use GitHub Actions to automate PR checks, releases, and deployments.">Mit GitHub Actions automatisiere ich PR-Checks, Releases und Deployments.</p><p class="skill-detail">Pull Request → Checks → Deploy</p></details>
-</section>
-<section class="commit-demo" aria-labelledby="commit-title">
-  <h2 id="commit-title" data-en="What does this commit rebuild?">Was baut dieser Commit neu?</h2>
-  <p data-en="In this dbt example, stg_orders has changed. The + selector includes the models that depend on it.">In diesem dbt-Beispiel wurde stg_orders geändert. Der +-Selektor nimmt die davon abhängigen Modelle mit.</p>
-  <ul class="model-graph" id="model-graph">
-    <li><code>stg_orders</code><span aria-hidden="true">→</span><code>fct_orders</code><span aria-hidden="true">→</span><code>mart_revenue</code></li>
-    <li><code>stg_customers</code><span aria-hidden="true">→</span><code>dim_customers</code></li>
-  </ul>
-  <button class="commit-button" type="button" aria-controls="model-graph" aria-pressed="false" hidden><code>dbt build --select stg_orders+</code></button>
-  <p class="commit-status" role="status"></p>
+<details class="skill" name="skills" open><summary><span data-en="Build AI prototypes">KI-Prototypen bauen</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I build prototypes with Claude and connect tools and data sources through MCP.">Ich baue Prototypen mit Claude und schließe Tools und Datenquellen über MCP an.</p></details>
+<details class="skill" name="skills"><summary><span data-en="Model data">Daten modellieren</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I model data in Snowflake and write SQL transformations with dbt.">Ich modelliere Daten in Snowflake und schreibe SQL-Transformationen mit dbt.</p></details>
+<details class="skill" name="skills"><summary><span data-en="Automate deployments">Deployments automatisieren</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I use GitHub Actions to automate PR checks, releases, and deployments.">Mit GitHub Actions automatisiere ich PR-Checks, Releases und Deployments.</p><p class="skill-detail">Pull Request → Checks → Deploy</p></details>
 </section>
 <div class="background">
 <section class="history" aria-labelledby="history">
@@ -99,31 +90,17 @@ motionToggle.addEventListener("click", () => {
 });
 motionToggle.hidden = false;
 
-const commitButton = document.querySelector(".commit-button");
-const commitStatus = document.querySelector(".commit-status");
-
-function updateCommitStatus() {
-  const active = commitButton.getAttribute("aria-pressed") === "true";
-  const selected = {
-    de: "3 Modelle ausgewählt. Die Kundenmodelle bleiben unverändert.",
-    en: "3 models selected. The customer models are unaffected."
-  };
-  commitStatus.textContent = active ? selected[root.lang] : "";
-}
-
-commitButton.addEventListener("click", () => {
-  const active = commitButton.getAttribute("aria-pressed") !== "true";
-  commitButton.setAttribute("aria-pressed", String(active));
-  document.querySelector(".model-graph").toggleAttribute("data-selected", active);
-  updateCommitStatus();
+const portraitButton = document.querySelector(".portrait-trigger");
+portraitButton.addEventListener("click", () => {
+  const active = portraitButton.getAttribute("aria-pressed") !== "true";
+  portraitButton.setAttribute("aria-pressed", String(active));
 });
-commitButton.hidden = false;
+portraitButton.hidden = false;
 
 const buttons = Array.from(document.querySelectorAll('.language button'));
 
 function setLanguage(language) {
   document.documentElement.lang = language;
-  updateCommitStatus();
   for (const { element, attribute, ...text } of translations) {
     if (attribute) element.setAttribute(attribute, text[language]);
     else element.textContent = text[language];
