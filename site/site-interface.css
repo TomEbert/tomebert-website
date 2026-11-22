@@ -338,3 +338,28 @@ main > header::before, main > .skills::before, main > .background::before {
   .pipeline-transform {transition:background-color .2s,color .2s}
   :root[data-motion-paused] .pipeline-transform {transition:none}
 }
+
+@media (max-width:630px) {
+  nav {padding-block:.6rem;gap:.55rem}
+  nav > span {display:none}
+  .nav-links {gap:.45rem .65rem}
+  .location {flex-basis:100%}
+  main > header, main > .skills, main > .background {
+    border-inline-start:0;
+    padding-inline-start:0;
+  }
+  main > header::before, main > .skills::before, main > .background::before {display:none}
+  header {gap:1.25rem;padding-block:1.8rem}
+  h1 {font-size:clamp(2.75rem,11vw,4.25rem)}
+  .intro {margin-top:.85rem}
+  .current {margin-top:.85rem}
+  .portrait {
+    max-width:none;
+    aspect-ratio:16/10;
+    object-position:50% 26%;
+  }
+  .pipeline {margin-top:1.2rem}
+  .pipeline .motion-row {display:none}
+  .pipeline-controls {margin-top:0}
+  .pipeline-transform {padding-inline:.45rem}
+}
