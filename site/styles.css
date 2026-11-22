@@ -1,7 +1,7 @@
-:root {color-scheme:light dark;--bg:#151714;--surface:#1d201b;--ink:#f3f2e9;--muted:#b7bcb0;--line:#42483d;--accent:#d4ef86;--accent-ink:#191c15}
-:root[data-theme="light"] {--bg:#f6f7f0;--surface:#e9eddf;--ink:#191e15;--muted:#4c5746;--line:#a7b09e;--accent:#3c571c;--accent-ink:#fff}
+:root {color-scheme:light dark;--bg:#10131c;--surface:#191f30;--ink:#edf3ff;--muted:#aebad1;--line:#414d68;--accent:#88eced;--accent-ink:#10212b;--secondary:#b7a2ff}
+:root[data-theme="light"] {--bg:#f1f5fc;--surface:#e2eaf7;--ink:#17233b;--muted:#465671;--line:#a2b1ce;--accent:#006369;--accent-ink:#fff;--secondary:#6840ba}
 @media (prefers-color-scheme: light) {
-  :root:not([data-theme]) {--bg:#f6f7f0;--surface:#e9eddf;--ink:#191e15;--muted:#4c5746;--line:#a7b09e;--accent:#3c571c;--accent-ink:#fff}
+  :root:not([data-theme]) {--bg:#f1f5fc;--surface:#e2eaf7;--ink:#17233b;--muted:#465671;--line:#a2b1ce;--accent:#006369;--accent-ink:#fff;--secondary:#6840ba}
 }
 :root[data-theme="light"] {color-scheme:light}
 :root[data-theme="dark"] {color-scheme:dark}
@@ -141,3 +141,56 @@ summary:hover,.skill[open] {background:var(--surface)}
 @media (prefers-reduced-motion:reduce) {
   .data-flow-track::after,.data-flow-node,.data-flow-output i {animation:none}
 }
+
+/* The background stays still while motion follows load, scroll and interaction. */
+body {
+  background-image:radial-gradient(ellipse at 84% 0%, color-mix(in srgb,var(--secondary) 13%,transparent), transparent 55%);
+}
+nav, header, .skills, .background {position:relative}
+nav::after {
+  position:absolute;
+  inset:auto 0 -1px;
+  height:1px;
+  content:"";
+  background:linear-gradient(90deg,var(--accent),var(--secondary),transparent 75%);
+  pointer-events:none;
+}
+.portrait {
+  border-image:linear-gradient(90deg,var(--accent),var(--secondary)) 1;
+}
+.data-flow {
+  width:min(100%,22rem);
+  min-height:3.5rem;
+  padding:.5rem .75rem;
+  border:1px solid var(--line);
+  background:repeating-linear-gradient(90deg,transparent 0 15px,color-mix(in srgb,var(--line) 45%,transparent) 15px 16px);
+}
+.data-flow-node,.data-flow-output {color:var(--secondary)}
+.data-flow-track::after {background:linear-gradient(90deg,var(--accent),var(--secondary))}
+.data-flow-output {height:2rem}
+@media (prefers-reduced-motion:no-preference) {
+  nav::after {animation:trace-in .95s ease-out both;transform-origin:left}
+  header h1 {animation:lift-in .65s ease-out both}
+  header .field {animation:lift-in .65s ease-out .09s both}
+  header .intro, header .current {animation:lift-in .65s ease-out .17s both}
+  .portrait {animation:portrait-in .9s cubic-bezier(.2,.7,.2,1) both}
+  .skill[open] p {animation:lift-in .25s ease-out both}
+  .theme-toggle, .language button, .nav-links a {transition:color .2s,background-color .2s,transform .2s}
+  .theme-toggle:hover,.nav-links a:hover {transform:translateY(-2px)}
+  summary {transition:background-color .18s,color .18s,padding-inline-start .22s}
+  summary:hover, summary:focus-visible {padding-inline-start:1.25rem}
+  @supports (animation-timeline:view()) {
+    .skill, .history {
+      animation:section-in linear both;
+      animation-timeline:view();
+      animation-range:entry 0% entry 70%;
+    }
+  }
+}
+@keyframes trace-in {from {transform:scaleX(0)}}
+@keyframes lift-in {from {opacity:0;transform:translateY(.6rem)}}
+@keyframes portrait-in {
+  from {opacity:.35;clip-path:inset(0 0 12% 9%);transform:translateY(.65rem)}
+  to {opacity:1;clip-path:inset(0);transform:none}
+}
+@keyframes section-in {from {opacity:.55;transform:translateY(.55rem)}}
