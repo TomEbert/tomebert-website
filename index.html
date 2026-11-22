@@ -38,13 +38,26 @@ dt {color:var(--blue); font-weight:680; font-size:clamp(1.1rem,2.25vw,1.45rem); 
   header,.skill,.history {grid-template-columns:1fr}
   header {row-gap:1.35rem}
 }
+
+:root {--paper:#f8f7f2; --ink:#181b19; --blue:#243bb1}
+nav {align-items:center}
+header {grid-template-columns:minmax(0,1fr) minmax(12rem,15rem); align-items:center}
+.hello {margin-bottom:1rem; font-weight:600}
+.field {margin-top:.85rem}
+.current {align-self:end; margin-bottom:.25rem}
+.personal {margin-top:2.35rem; padding:1.5rem clamp(1rem,4vw,2.5rem); background:var(--blue); color:white; border:0}
+.personal p {font-family:Georgia,serif; font-size:clamp(1.2rem,2.5vw,1.6rem); line-height:1.35}
+@media(max-width:620px) {
+  header {grid-template-columns:1fr}
+  .personal {gap:.85rem}
+}
 </style>
 </head>
 <body>
 <main>
 <nav aria-label="Kontakt und Sprache" data-en-label="Contact and language"><span>tomebert.de</span><div class="nav-links"><a href="https://www.linkedin.com/in/tom-ebert/">LinkedIn</a><div class="language" role="group" aria-label="Sprache" data-en-label="Language"><button type="button" lang="de" aria-label="Deutsch" aria-pressed="true">DE</button><button type="button" lang="en" aria-label="English" aria-pressed="false">EN</button></div></div></nav>
 <header>
-<div><p class="hello" data-en="Hi, I’m">Hi, ich bin</p><h1>Tom Ebert</h1><p class="field">AI &amp; Data</p><p class="intro" data-en="I started out building iOS apps. These days I build AI prototypes and help ship changes to data pipelines safely.">Angefangen habe ich mit iOS-Apps. Heute baue ich KI-Prototypen und kümmere mich darum, dass Änderungen an Datenpipelines sauber in Produktion kommen.</p></div>
+<div><p class="hello" data-en="Hi, I’m">Hi, ich bin</p><h1>Tom Ebert</h1><p class="field">AI &amp; Data</p><p class="intro" data-en="I started out building iOS apps. These days I build AI prototypes and help ship changes to data pipelines safely.">Ich habe mit nativen iOS-Apps angefangen. Heute baue ich KI-Prototypen und arbeite daran, dass Änderungen an Datenpipelines zuverlässig in Produktion gehen.</p></div>
 <p class="current"><span data-en="Currently">Aktuell</span><strong style="font-weight:inherit" data-en="AI Consultant at INFOMOTION">AI Consultant bei INFOMOTION</strong></p>
 </header>
 <section aria-labelledby="skills">
