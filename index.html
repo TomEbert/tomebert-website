@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
 <title>Tom Ebert · AI &amp; Data</title>
 <style>
 :root {color-scheme:light dark;--bg:#151714;--surface:#1d201b;--ink:#f3f2e9;--muted:#b7bcb0;--line:#42483d;--accent:#d4ef86;--accent-ink:#191c15}
@@ -58,7 +60,7 @@ summary:hover,.skill[open] {background:var(--surface)}
 </head>
 <body>
 <main>
-<nav aria-label="Kontakt und Sprache" data-en-label="Contact and language"><span>tomebert.de</span><div class="nav-links"><a href="mailto:hello@tomebert.de">hello@tomebert.de</a><a href="https://www.linkedin.com/in/tom-ebert/">LinkedIn</a><span class="location" data-en="Home base Stuttgart">Homebase: Stuttgart</span><div class="language" role="group" aria-label="Sprache" data-en-label="Language"><button type="button" lang="de" aria-label="Deutsch" aria-pressed="true">DE</button><button type="button" lang="en" aria-label="English" aria-pressed="false">EN</button></div></div></nav>
+<nav aria-label="Kontakt und Sprache" data-en-label="Contact and language"><span>tomebert.de</span><div class="nav-links"><a class="email-link" aria-label="E-Mail"></a><a href="https://www.linkedin.com/in/tom-ebert/">LinkedIn</a><span class="location" data-en="Home base Stuttgart">Homebase: Stuttgart</span><div class="language" role="group" aria-label="Sprache" data-en-label="Language"><button type="button" lang="de" aria-label="Deutsch" aria-pressed="true">DE</button><button type="button" lang="en" aria-label="English" aria-pressed="false">EN</button></div></div></nav>
 <header>
 <div><h1>Tom Ebert</h1><p class="field">AI &amp; Data Consultant</p><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p>
 <p class="current"><span data-en="Currently">Aktuell</span><strong>INFOMOTION</strong></p></div>
@@ -91,6 +93,14 @@ const translations = Array.from(document.querySelectorAll('[data-en], [data-en-l
     en: element.dataset.enAlt ?? element.dataset.enLabel ?? element.dataset.en
   };
 });
+
+const emailLink = document.querySelector('.email-link');
+const emailUser = [104, 101, 108, 108, 111].map(code => String.fromCharCode(code)).join('');
+const emailDomain = [116, 111, 109, 101, 98, 101, 114, 116, 46, 100, 101].map(code => String.fromCharCode(code)).join('');
+const emailAddress = emailUser + '@' + emailDomain;
+emailLink.href = 'mailto:' + emailAddress;
+emailLink.textContent = emailAddress;
+emailLink.setAttribute('aria-label', emailAddress);
 const buttons = Array.from(document.querySelectorAll('.language button'));
 
 function setLanguage(language) {
