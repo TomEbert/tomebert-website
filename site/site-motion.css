@@ -259,3 +259,37 @@ nav::after {
   0%,32%,100% {opacity:1}
   16% {opacity:.56}
 }
+
+.motion-toggle {inline-size:2.75rem}
+.motion-toggle[hidden] {display:none}
+
+@media (prefers-reduced-motion:no-preference) {
+  .field {
+    width:fit-content;
+    background-image:linear-gradient(90deg,transparent,var(--secondary),transparent);
+    background-repeat:no-repeat;
+    background-size:38% 1px;
+    background-position:-65% 100%;
+    animation:role-trace 9s ease-in-out 1.2s infinite both;
+  }
+  .skill[open] summary > span:first-child {animation:lift-in .28s ease-out both}
+  @supports (animation-timeline:view()) {
+    .history h2, .history p {
+      animation:lift-in linear both;
+      animation-timeline:view();
+    }
+    .history h2 {animation-range:entry 0% entry 90%}
+    .history p {animation-range:entry 10% entry 95%}
+  }
+  :root[data-motion-paused] .field {animation-play-state:paused}
+  :root[data-motion-paused] nav::after {animation:none}
+  :root[data-motion-paused] :is(header h1,header .intro,header .current,.portrait,.skill,.skill p,.skill summary > span,.history,.history h2,.history p,.data-flow-node,.data-flow-output i) {
+    animation:none;
+  }
+  :root[data-motion-paused] .data-flow-track::after {animation-play-state:paused}
+  :root[data-motion-paused] :is(a,summary,button,.theme-icon) {transition:none}
+}
+@keyframes role-trace {
+  0% {background-position:-65% 100%}
+  32%,100% {background-position:165% 100%}
+}
