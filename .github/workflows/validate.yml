@@ -69,6 +69,7 @@ jobs:
           python - <<'PY'
           import re
           from pathlib import Path
+          from urllib.parse import urlsplit
 
           html = Path("index.html").read_text(encoding="utf-8")
           assets = re.findall(r'(?:src|href)="([^"]+)"', html)
@@ -76,7 +77,7 @@ jobs:
           for asset in assets:
               if "://" in asset or asset.startswith("mailto:") or asset.startswith("#"):
                   continue
-              if not Path(asset).exists():
+              if not Path(urlsplit(asset).path).is_file():
                   raise SystemExit(f"Referenced asset is missing: {asset}")
 
           for stylesheet in Path("assets/css").rglob("*.css"):

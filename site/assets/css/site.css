@@ -15,7 +15,14 @@ a:hover {color:var(--accent)}
 nav,.nav-links,.language {display:flex;align-items:center;gap:1rem}
 nav {justify-content:space-between;border-bottom:1px solid var(--line);min-height:4.25rem;flex-wrap:wrap;font-size:.875rem}
 .site-brand,.language,.current span,.location {font-family:ui-monospace,monospace}
-.site-brand {display:inline-flex;align-items:center;gap:.5rem}
+.site-brand {
+  display:flex;
+  align-items:center;
+  flex:none;
+  gap:.625rem;
+  line-height:1;
+  white-space:nowrap;
+}
 .site-brand img {display:block;flex:none}
 .location {color:var(--muted)}
 .language {gap:.25rem;border:1px solid var(--line);padding:.2rem}
