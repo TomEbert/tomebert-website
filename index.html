@@ -51,6 +51,14 @@ header {grid-template-columns:minmax(0,1fr) minmax(12rem,15rem); align-items:cen
   header {grid-template-columns:1fr}
   .personal {gap:.85rem}
 }
+
+header {grid-template-columns:minmax(0,1fr) minmax(12rem,19rem); row-gap:1.35rem}
+header .current {align-self:start; margin:0}
+.portrait {grid-column:2; grid-row:1 / span 2; display:block; width:100%; height:auto; align-self:center}
+@media(max-width:620px) {
+  header {grid-template-columns:1fr}
+  .portrait {grid-column:1; grid-row:auto; width:min(100%,19rem)}
+}
 </style>
 </head>
 <body>
@@ -59,6 +67,7 @@ header {grid-template-columns:minmax(0,1fr) minmax(12rem,15rem); align-items:cen
 <header>
 <div><p class="hello" data-en="Hi, I’m">Hi, ich bin</p><h1>Tom Ebert</h1><p class="field">AI &amp; Data</p><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p></div>
 <p class="current"><span data-en="Currently">Aktuell</span><strong style="font-weight:inherit" data-en="AI Consultant at INFOMOTION">AI Consultant bei INFOMOTION</strong></p>
+<img class="portrait" src="tom-ebert.webp" width="800" height="1199" alt="Tom Ebert bei einem Vortrag" data-en-alt="Tom Ebert giving a talk">
 </header>
 <section aria-labelledby="skills">
 <h2 id="skills" data-en="What I do">Was ich mache</h2>
@@ -74,17 +83,17 @@ header {grid-template-columns:minmax(0,1fr) minmax(12rem,15rem); align-items:cen
 </section>
 <section class="history personal" aria-labelledby="privat">
 <h2 id="privat" data-en="When I close my laptop">Wenn ich den Laptop zuklappe</h2>
-<p data-en="I love cooking and, if you ask me, I’m pretty good at it. I ski in winter and sail in summer.">Ich koche wahnsinnig gern und, finde ich, auch ziemlich gut. Im Winter steh ich auf Ski, im Sommer geh ich segeln.</p>
+<p data-en="I love to cook. And I’d say I’m pretty good at it. I ski in winter and sail in summer.">Ich koche gern. Und ich würde sagen, ziemlich gut. Im Winter steh ich auf Ski, im Sommer geh ich segeln.</p>
 </section>
 </main>
 <script>
-const translations = Array.from(document.querySelectorAll('[data-en], [data-en-label]'), element => {
-  const attribute = element.hasAttribute('data-en-label') ? 'aria-label' : null;
+const translations = Array.from(document.querySelectorAll('[data-en], [data-en-label], [data-en-alt]'), element => {
+  const attribute = element.hasAttribute('data-en-alt') ? 'alt' : element.hasAttribute('data-en-label') ? 'aria-label' : null;
   return {
     element,
     attribute,
     de: attribute ? element.getAttribute(attribute) : element.textContent,
-    en: attribute ? element.dataset.enLabel : element.dataset.en
+    en: element.dataset.enAlt ?? element.dataset.enLabel ?? element.dataset.en
   };
 });
 const buttons = Array.from(document.querySelectorAll('.language button'));
