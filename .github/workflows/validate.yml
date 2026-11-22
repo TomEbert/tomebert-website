@@ -61,6 +61,9 @@ jobs:
           print("Site validation passed")
           PY
 
+      - name: Check JavaScript syntax
+        run: node --check assets/js/site.js
+
       - name: Check referenced assets
         run: |
           python - <<'PY'
@@ -75,6 +78,15 @@ jobs:
                   continue
               if not Path(asset).exists():
                   raise SystemExit(f"Referenced asset is missing: {asset}")
+
+          for stylesheet in Path("assets/css").rglob("*.css"):
+              css = stylesheet.read_text(encoding="utf-8")
+              for url in re.findall(r'url\(\s*["\']?([^"\')]+)', css):
+                  url = url.strip()
+                  if "://" in url or url.startswith(("data:", "#")):
+                      continue
+                  if not (stylesheet.parent / url).is_file():
+                      raise SystemExit(f"{stylesheet}: referenced asset is missing: {url}")
 
           print("Asset references passed")
           PY
