@@ -231,7 +231,7 @@ nav::after {
   .motion-toggle {display:none}
 }
 @media (prefers-reduced-motion:no-preference) {
-  .data-flow {animation:grid-drift 12s linear infinite}
+  .data-flow {animation:grid-drift 8s linear infinite}
   .data-flow-track::before {
     position:absolute;
     z-index:1;
@@ -239,11 +239,11 @@ nav::after {
     width:28%;
     content:"";
     background:linear-gradient(90deg,transparent,var(--accent));
-    animation:ambient-signal 6s ease-in-out 1.8s infinite both;
+    animation:ambient-signal 4s ease-in-out 1.8s infinite both;
   }
   .data-flow-track:nth-child(4)::before {animation-delay:2.55s}
   .data-flow-output {
-    animation:ambient-chart 6s ease-in-out 3.05s infinite both;
+    animation:ambient-chart 4s ease-in-out 3.05s infinite both;
   }
   :root[data-motion-paused] .data-flow,
   :root[data-motion-paused] .data-flow-track::before,
@@ -253,11 +253,11 @@ nav::after {
 @keyframes ambient-signal {
   0% {left:0;opacity:0}
   9% {opacity:.85}
-  25%,100% {left:72%;opacity:0}
+  37.5%,100% {left:72%;opacity:0}
 }
 @keyframes ambient-chart {
-  0%,32%,100% {opacity:1}
-  16% {opacity:.56}
+  0%,48%,100% {opacity:1}
+  24% {opacity:.56}
 }
 
 .motion-toggle {inline-size:2.75rem}
@@ -270,7 +270,7 @@ nav::after {
     background-repeat:no-repeat;
     background-size:38% 1px;
     background-position:-65% 100%;
-    animation:role-trace 9s ease-in-out 1.2s infinite both;
+    animation:role-trace 5s ease-in-out 1.2s infinite both;
   }
   .skill[open] summary > span:first-child {animation:lift-in .28s ease-out both}
   @supports (animation-timeline:view()) {
@@ -291,5 +291,5 @@ nav::after {
 }
 @keyframes role-trace {
   0% {background-position:-65% 100%}
-  32%,100% {background-position:165% 100%}
+  57.6%,100% {background-position:165% 100%}
 }
