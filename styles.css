@@ -1,0 +1,83 @@
+:root {color-scheme:light dark;--bg:#151714;--surface:#1d201b;--ink:#f3f2e9;--muted:#b7bcb0;--line:#42483d;--accent:#d4ef86;--accent-ink:#191c15}
+:root[data-theme="light"] {--bg:#f6f7f0;--surface:#e9eddf;--ink:#191e15;--muted:#4c5746;--line:#a7b09e;--accent:#3c571c;--accent-ink:#fff}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {--bg:#f6f7f0;--surface:#e9eddf;--ink:#191e15;--muted:#4c5746;--line:#a7b09e;--accent:#3c571c;--accent-ink:#fff}
+}
+:root[data-theme="light"] {color-scheme:light}
+:root[data-theme="dark"] {color-scheme:dark}
+* {box-sizing:border-box}
+body {margin:0;background:var(--bg);color:var(--ink);font:1rem/1.55 system-ui,sans-serif}
+main {width:min(72rem,100% - 3rem);margin:auto}
+h1,h2,p {margin:0}
+a {color:inherit;text-underline-offset:.24em}
+a:hover {color:var(--accent)}
+:focus-visible {outline:2px solid var(--accent);outline-offset:5px}
+nav,.nav-links,.language {display:flex;align-items:center;gap:1rem}
+nav {justify-content:space-between;border-bottom:1px solid var(--line);min-height:4.25rem;flex-wrap:wrap;font-size:.875rem}
+nav>span,.language,.current span,.location {font-family:ui-monospace,monospace}
+.location {color:var(--muted)}
+.language {gap:.25rem;border:1px solid var(--line);padding:.2rem}
+.theme-toggle {
+  display:grid;
+  place-items:center;
+  inline-size:2.75rem;
+  block-size:2.75rem;
+  padding:0;
+  color:var(--accent);
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:50%;
+  cursor:pointer;
+}
+.theme-toggle[hidden] {display:none}
+.theme-icon {
+  grid-area:1 / 1;
+  width:1.25rem;
+  height:1.25rem;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  transition:transform .28s ease, opacity .2s ease;
+}
+.theme-moon {opacity:0;transform:rotate(-40deg) scale(.55)}
+.theme-toggle[aria-pressed="true"] .theme-sun {opacity:0;transform:rotate(45deg) scale(.55)}
+.theme-toggle[aria-pressed="true"] .theme-moon {opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce) {
+  .theme-icon {transition:none}
+}
+.nav-links {flex-wrap:wrap}
+.language button {font:inherit;color:var(--muted);background:none;border:0;min-width:2.4rem;min-height:2rem;cursor:pointer}
+.language button[aria-pressed=true] {color:var(--accent-ink);background:var(--accent)}
+header {display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);align-items:center;gap:clamp(1.5rem,6vw,5rem);padding:clamp(2rem,6vw,5rem) 0}
+h1 {font-size:clamp(3rem,8.3vw,7.6rem);line-height:.91;letter-spacing:-.075em;font-weight:750}
+.field {font-size:clamp(1.2rem,3vw,2.1rem);font-weight:550;color:var(--accent);margin-top:.75rem;letter-spacing:-.035em}
+.intro {margin-top:1.3rem;max-width:40ch;color:var(--muted)}
+.current {margin-top:1.8rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem .75rem;font-size:.9rem}
+.current span {color:var(--muted)}
+.portrait {display:block;width:100%;height:auto;aspect-ratio:5/6;object-fit:cover;object-position:50% 33%;border-bottom:3px solid var(--accent)}
+.skills {border-top:1px solid var(--line);padding-top:1rem}
+h2 {font-size:1rem;font-weight:650}
+.skills h2 {color:var(--muted);margin-bottom:.85rem}
+.skill {border-bottom:1px solid var(--line)}
+summary {display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.8rem .9rem;cursor:pointer;list-style:none;font-size:clamp(1.15rem,2.4vw,1.6rem);font-weight:630;letter-spacing:-.035em;transition:background-color .18s,color .18s}
+summary::-webkit-details-marker {display:none}
+summary:hover,.skill[open] {background:var(--surface)}
+.skill[open] summary {color:var(--accent)}
+.toggle {font:1.2rem/1 ui-monospace,monospace;color:var(--accent)}
+.toggle::before {content:"+"}
+.skill[open] .toggle::before {content:"−"}
+.skill p {padding:0 .9rem 1rem;max-width:65ch;color:var(--muted)}
+.background {display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin:2.1rem 0 3rem}
+.history {border-top:1px solid var(--line);padding-top:.8rem}
+.history h2 {margin-bottom:.45rem}
+.history p {color:var(--muted)}
+.personal {border-top-color:var(--accent)}
+@media(max-width:630px) {
+ main {width:calc(100% - 2rem)}
+ header,.background {grid-template-columns:1fr}
+ .portrait {max-width:27rem}
+ .background {gap:1.3rem}
+}
+@media(prefers-reduced-motion:reduce) {summary {transition:none}}
