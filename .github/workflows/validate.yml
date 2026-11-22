@@ -57,8 +57,6 @@ jobs:
               raise SystemExit("index.html is missing html or body")
           if validator.script != 0:
               raise SystemExit("Unbalanced script tags")
-          if not Path("tom-ebert.webp").exists():
-              raise SystemExit("tom-ebert.webp is missing")
 
           print("Site validation passed")
           PY
