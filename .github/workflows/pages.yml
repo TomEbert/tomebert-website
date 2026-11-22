@@ -19,12 +19,15 @@ jobs:
     permissions:
       contents: read
       pull-requests: read
+    outputs:
+      preview_numbers: ${{ steps.assemble.outputs.preview_numbers }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
 
       - name: Assemble production and previews
+        id: assemble
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -58,6 +61,9 @@ jobs:
             test -f "$destination/index.html"
           done < previews.tsv
 
+          preview_numbers=$(cut -f1 previews.tsv | jq -Rsc 'split("\n") | map(select(length > 0))')
+          echo "preview_numbers=$preview_numbers" >> "$GITHUB_OUTPUT"
+
           if find public -type l -print -quit | grep -q .; then
             echo "Symbolic links are not supported in Pages output."
             exit 1
@@ -73,9 +79,41 @@ jobs:
     permissions:
       pages: write
       id-token: write
+    outputs:
+      page_url: ${{ steps.pages.outputs.page_url }}
     environment:
       name: github-pages
       url: ${{ steps.pages.outputs.page_url }}
     steps:
       - uses: actions/deploy-pages@v4
         id: pages
+
+  link-previews:
+    needs: [package, deploy]
+    if: needs.package.outputs.preview_numbers != '[]'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Add or update the preview link on each pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAGE_URL: ${{ needs.deploy.outputs.page_url }}
+          PREVIEW_NUMBERS: ${{ needs.package.outputs.preview_numbers }}
+        run: |
+          set -euo pipefail
+          marker='<!-- pages-pr-preview -->'
+
+          while read -r number; do
+            preview_url="${PAGE_URL%/}/pr-preview/pr-$number/"
+            body=$(printf '%s\n[Website-Vorschau öffnen](%s)' "$marker" "$preview_url")
+            endpoint="repos/$GITHUB_REPOSITORY/issues/$number/comments"
+            comment_id=$(gh api --paginate "$endpoint" \
+              --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | startswith("<!-- pages-pr-preview -->"))) | .id' | sed -n '1p')
+
+            if [ -n "$comment_id" ]; then
+              gh api --silent --method PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$comment_id" -f body="$body"
+            else
+              gh api --silent --method POST "$endpoint" -f body="$body"
+            fi
+          done < <(jq -r '.[]' <<< "$PREVIEW_NUMBERS")
