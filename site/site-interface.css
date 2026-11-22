@@ -293,3 +293,48 @@ nav::after {
   from {background-position:0 100%}
   to {background-position:100% 100%}
 }
+
+/* Shared guide for the profile sections. */
+main > header, main > .skills, main > .background {
+  border-inline-start:1px solid var(--line);
+  padding-inline-start:clamp(.8rem,3vw,2rem);
+}
+main > header::before, main > .skills::before, main > .background::before {
+  content:"";
+  position:absolute;
+  inset-block-start:0;
+  inset-inline-start:-3px;
+  inline-size:5px;
+  block-size:5px;
+  background:var(--accent);
+}
+.pipeline {max-width:22rem}
+.pipeline-controls {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  gap:.4rem;
+  align-items:center;
+  margin-top:.5rem;
+}
+.pipeline-stage,.pipeline-transform,.skill-detail {
+  font: .8rem/1.5 ui-monospace,monospace;
+}
+.pipeline-stage {display:grid;gap:.15rem;color:var(--muted);min-width:0}
+.pipeline-stage code {font:inherit;color:var(--ink);overflow-wrap:anywhere}
+.pipeline-output code {color:var(--secondary)}
+.pipeline-transform {
+  min-height:2.75rem;
+  padding:.35rem .55rem;
+  background:var(--surface);
+  color:var(--accent);
+  border:1px solid currentColor;
+  cursor:pointer;
+}
+.pipeline-transform[aria-pressed="true"] {background:var(--accent);color:var(--accent-ink)}
+.pipeline-caption {margin-top:.45rem;font-size:.85rem;color:var(--muted)}
+.skill .skill-detail {color:var(--muted)}
+.nav-links a {text-decoration-color:var(--accent)}
+@media (prefers-reduced-motion:no-preference) {
+  .pipeline-transform {transition:background-color .2s,color .2s}
+  :root[data-motion-paused] .pipeline-transform {transition:none}
+}

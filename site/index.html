@@ -7,7 +7,7 @@
 <meta name="referrer" content="no-referrer">
 <title>Tom Ebert · AI &amp; Data</title>
 <link rel="icon" href="./favicon.ico" sizes="16x16 32x32 48x48">
-<link rel="stylesheet" href="site-motion.css">
+<link rel="stylesheet" href="site-interface.css">
 </head>
 <body>
 <main>
@@ -18,6 +18,7 @@
 <header>
 <div><h1>Tom Ebert</h1><p class="field">AI &amp; Data Consultant</p><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p>
 <p class="current"><span data-en="Currently">Aktuell</span><strong>INFOMOTION</strong></p>
+<div class="pipeline">
 <div class="motion-row">
 <div class="data-flow" aria-hidden="true">
   <span class="data-flow-input"><i></i><i></i><i></i></span>
@@ -27,14 +28,21 @@
   <span class="data-flow-output"><i></i><i></i><i></i><i></i></span>
 </div>
 </div>
+<div class="pipeline-controls">
+  <div class="pipeline-stage"><span>Input</span><code>A B A C B</code></div>
+  <button class="pipeline-transform" type="button" aria-pressed="false" hidden>Transform</button>
+  <div class="pipeline-stage pipeline-output"><span>Output</span><output><code id="pipeline-values">A B A C B</code></output></div>
+</div>
+<p class="pipeline-caption" data-en="Transform removes duplicate values.">Transform entfernt doppelte Werte.</p>
+</div>
 </div>
 <img class="portrait" src="tom-ebert.webp" width="800" height="1199" alt="Tom Ebert bei einem Vortrag" data-en-alt="Tom Ebert giving a talk">
 </header>
 <section class="skills" aria-labelledby="skills">
 <h2 id="skills" data-en="What I do">Was ich mache</h2>
-<details class="skill" name="skills" open><summary><span data-en="AI applications">KI-Anwendungen</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I build prototypes with Claude and connect tools and data sources through MCP.">Ich baue Prototypen mit Claude und schließe Tools und Datenquellen über MCP an.</p></details>
-<details class="skill" name="skills"><summary><span>Data Engineering</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I model data in Snowflake and write SQL transformations with dbt.">Ich modelliere Daten in Snowflake und schreibe SQL-Transformationen mit dbt.</p></details>
-<details class="skill" name="skills"><summary><span data-en="CI/CD for data pipelines">CI/CD für Datenpipelines</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I use GitHub Actions to automate PR checks, releases, and deployments.">Mit GitHub Actions automatisiere ich PR-Checks, Releases und Deployments.</p></details>
+<details class="skill" name="skills" open><summary><span data-en="AI applications">KI-Anwendungen</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I build prototypes with Claude and connect tools and data sources through MCP.">Ich baue Prototypen mit Claude und schließe Tools und Datenquellen über MCP an.</p><p class="skill-detail">Tools · MCP · Claude</p></details>
+<details class="skill" name="skills"><summary><span>Data Engineering</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I model data in Snowflake and write SQL transformations with dbt.">Ich modelliere Daten in Snowflake und schreibe SQL-Transformationen mit dbt.</p><p class="skill-detail">Snowflake · SQL · dbt</p></details>
+<details class="skill" name="skills"><summary><span data-en="CI/CD for data pipelines">CI/CD für Datenpipelines</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I use GitHub Actions to automate PR checks, releases, and deployments.">Mit GitHub Actions automatisiere ich PR-Checks, Releases und Deployments.</p><p class="skill-detail">Pull Request → Checks → Deploy</p></details>
 </section>
 <div class="background">
 <section class="history" aria-labelledby="history">
@@ -88,6 +96,18 @@ motionToggle.addEventListener("click", () => {
   motionToggle.setAttribute("aria-pressed", String(paused));
 });
 motionToggle.hidden = false;
+
+const transform = document.querySelector(".pipeline-transform");
+const pipelineValues = document.querySelector("#pipeline-values");
+const inputValues = pipelineValues.textContent.trim().split(/\s+/);
+
+transform.addEventListener("click", () => {
+  const active = transform.getAttribute("aria-pressed") !== "true";
+  const values = active ? [...new Set(inputValues)] : inputValues;
+  pipelineValues.textContent = values.join(" ");
+  transform.setAttribute("aria-pressed", String(active));
+});
+transform.hidden = false;
 
 const buttons = Array.from(document.querySelectorAll('.language button'));
 
