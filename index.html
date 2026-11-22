@@ -10,9 +10,12 @@
 <link rel="apple-touch-icon" href="favicon.svg">
 <style>
 :root {color-scheme:light dark;--bg:#151714;--surface:#1d201b;--ink:#f3f2e9;--muted:#b7bcb0;--line:#42483d;--accent:#d4ef86;--accent-ink:#191c15}
+:root[data-theme="light"] {--bg:#f6f7f0;--surface:#e9eddf;--ink:#191e15;--muted:#4c5746;--line:#a7b09e;--accent:#3c571c;--accent-ink:#fff}
 @media (prefers-color-scheme: light) {
-  :root {--bg:#f6f7f0;--surface:#e9eddf;--ink:#191e15;--muted:#4c5746;--line:#a7b09e;--accent:#3c571c;--accent-ink:#fff}
+  :root:not([data-theme]) {--bg:#f6f7f0;--surface:#e9eddf;--ink:#191e15;--muted:#4c5746;--line:#a7b09e;--accent:#3c571c;--accent-ink:#fff}
 }
+:root[data-theme="light"] {color-scheme:light}
+:root[data-theme="dark"] {color-scheme:dark}
 * {box-sizing:border-box}
 body {margin:0;background:var(--bg);color:var(--ink);font:1rem/1.55 system-ui,sans-serif}
 main {width:min(72rem,100% - 3rem);margin:auto}
@@ -25,6 +28,8 @@ nav {justify-content:space-between;border-bottom:1px solid var(--line);min-heigh
 nav>span,.language,.current span,.location {font-family:ui-monospace,monospace}
 .location {color:var(--muted)}
 .language {gap:.25rem;border:1px solid var(--line);padding:.2rem}
+.theme-toggle {font:inherit;color:inherit;background:none;border:1px solid var(--line);padding:.45rem .55rem;cursor:pointer}
+.nav-links {flex-wrap:wrap}
 .language button {font:inherit;color:var(--muted);background:none;border:0;min-width:2.4rem;min-height:2rem;cursor:pointer}
 .language button[aria-pressed=true] {color:var(--accent-ink);background:var(--accent)}
 header {display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);align-items:center;gap:clamp(1.5rem,6vw,5rem);padding:clamp(2rem,6vw,5rem) 0}
@@ -62,7 +67,7 @@ summary:hover,.skill[open] {background:var(--surface)}
 </head>
 <body>
 <main>
-<nav aria-label="Kontakt und Sprache" data-en-label="Contact and language"><span>tomebert.de</span><div class="nav-links"><a class="email-link" aria-label="E-Mail"></a><a href="https://www.linkedin.com/in/tom-ebert/">LinkedIn</a><span class="location" data-en="Home base Stuttgart">Homebase: Stuttgart</span><div class="language" role="group" aria-label="Sprache" data-en-label="Language"><button type="button" lang="de" aria-label="Deutsch" aria-pressed="true">DE</button><button type="button" lang="en" aria-label="English" aria-pressed="false">EN</button></div></div></nav>
+<nav aria-label="Kontakt und Sprache" data-en-label="Contact and language"><span>tomebert.de</span><div class="nav-links"><a class="email-link" aria-label="E-Mail"></a><a href="https://www.linkedin.com/in/tom-ebert/">LinkedIn</a><span class="location" data-en="Home base Stuttgart">Homebase: Stuttgart</span><div class="language" role="group" aria-label="Sprache" data-en-label="Language"><button type="button" lang="de" aria-label="Deutsch" aria-pressed="true">DE</button><button type="button" lang="en" aria-label="English" aria-pressed="false">EN</button></div><button class="theme-toggle" type="button" hidden aria-pressed="false" data-en="Dark mode">Dunkelmodus</button></div></nav>
 <header>
 <div><h1>Tom Ebert</h1><p class="field">AI &amp; Data Consultant</p><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p>
 <p class="current"><span data-en="Currently">Aktuell</span><strong>INFOMOTION</strong></p></div>
@@ -103,6 +108,23 @@ const emailAddress = emailUser + '@' + emailDomain;
 emailLink.href = 'mailto:' + emailAddress;
 emailLink.textContent = emailAddress;
 emailLink.setAttribute('aria-label', emailAddress);
+const themeToggle = document.querySelector('.theme-toggle');
+const deviceTheme = window.matchMedia('(prefers-color-scheme: dark)');
+const root = document.documentElement;
+
+function updateThemeButton() {
+  const dark = root.dataset.theme ? root.dataset.theme === 'dark' : deviceTheme.matches;
+  themeToggle.setAttribute('aria-pressed', String(dark));
+}
+
+themeToggle.addEventListener('click', () => {
+  root.dataset.theme = themeToggle.getAttribute('aria-pressed') === 'true' ? 'light' : 'dark';
+  updateThemeButton();
+});
+deviceTheme.addEventListener('change', updateThemeButton);
+updateThemeButton();
+themeToggle.hidden = false;
+
 const buttons = Array.from(document.querySelectorAll('.language button'));
 
 function setLanguage(language) {
