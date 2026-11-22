@@ -18,7 +18,8 @@ a:hover {color:var(--accent)}
 :focus-visible {outline:2px solid var(--accent);outline-offset:5px}
 nav,.nav-links,.language {display:flex;align-items:center;gap:1rem}
 nav {justify-content:space-between;border-bottom:1px solid var(--line);min-height:4.25rem;flex-wrap:wrap;font-size:.875rem}
-nav>span,.language,.current span {font-family:ui-monospace,monospace}
+nav>span,.language,.current span,.location {font-family:ui-monospace,monospace}
+.location {color:var(--muted)}
 .language {gap:.25rem;border:1px solid var(--line);padding:.2rem}
 .language button {font:inherit;color:var(--muted);background:none;border:0;min-width:2.4rem;min-height:2rem;cursor:pointer}
 .language button[aria-pressed=true] {color:var(--accent-ink);background:var(--accent)}
@@ -57,7 +58,7 @@ summary:hover,.skill[open] {background:var(--surface)}
 </head>
 <body>
 <main>
-<nav aria-label="Kontakt und Sprache" data-en-label="Contact and language"><span>tomebert.de</span><div class="nav-links"><a href="https://www.linkedin.com/in/tom-ebert/">LinkedIn</a><div class="language" role="group" aria-label="Sprache" data-en-label="Language"><button type="button" lang="de" aria-label="Deutsch" aria-pressed="true">DE</button><button type="button" lang="en" aria-label="English" aria-pressed="false">EN</button></div></div></nav>
+<nav aria-label="Kontakt und Sprache" data-en-label="Contact and language"><span>tomebert.de</span><div class="nav-links"><a href="mailto:hello@tomebert.de">hello@tomebert.de</a><a href="https://www.linkedin.com/in/tom-ebert/">LinkedIn</a><span class="location" data-en="Home base Stuttgart">Homebase Stuttgart</span><div class="language" role="group" aria-label="Sprache" data-en-label="Language"><button type="button" lang="de" aria-label="Deutsch" aria-pressed="true">DE</button><button type="button" lang="en" aria-label="English" aria-pressed="false">EN</button></div></div></nav>
 <header>
 <div><h1>Tom Ebert</h1><p class="field">AI &amp; Data Consultant</p><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p>
 <p class="current"><span data-en="Currently">Aktuell</span><strong>INFOMOTION</strong></p></div>
