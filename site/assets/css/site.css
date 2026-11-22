@@ -66,9 +66,9 @@ h1 {font-size:clamp(3rem,8.3vw,7.6rem);line-height:.91;letter-spacing:-.075em;fo
 .current {margin-top:1.8rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem .75rem;font-size:.9rem}
 .current span {color:var(--muted)}
 .portrait {display:block;width:100%;height:auto;border-bottom:3px solid var(--accent)}
-.skills {border-top:1px solid var(--line);padding-top:1rem}
+.skills, .references {border-top:1px solid var(--line);padding-top:1rem}
 h2 {font-size:1rem;font-weight:650}
-.skills h2 {color:var(--muted);margin-bottom:.85rem}
+.skills h2, .references h2 {color:var(--muted);margin-bottom:.85rem}
 .skill {border-bottom:1px solid var(--line)}
 summary {display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.8rem .9rem;cursor:pointer;list-style:none;font-size:clamp(1.15rem,2.4vw,1.6rem);font-weight:630;letter-spacing:-.035em;transition:background-color .18s,color .18s}
 summary::-webkit-details-marker {display:none}
@@ -196,11 +196,11 @@ nav::after {
 }
 
 /* Shared guide for the profile sections. */
-main > header, main > .skills, main > .background {
+main > header, main > .skills, main > .references, main > .background {
   border-inline-start:1px solid var(--line);
   padding-inline-start:clamp(.8rem,3vw,2rem);
 }
-main > header::before, main > .skills::before, main > .background::before {
+main > header::before, main > .skills::before, main > .references::before, main > .background::before {
   content:"";
   position:absolute;
   inset-block-start:0;
@@ -216,11 +216,11 @@ main > header::before, main > .skills::before, main > .background::before {
   nav {padding-block:.6rem;gap:.55rem}
   .nav-links {gap:.45rem .65rem}
   .location {flex-basis:100%}
-  main > header, main > .skills, main > .background {
+  main > header, main > .skills, main > .references, main > .background {
     border-inline-start:0;
     padding-inline-start:0;
   }
-  main > header::before, main > .skills::before, main > .background::before {display:none}
+  main > header::before, main > .skills::before, main > .references::before, main > .background::before {display:none}
   header {gap:1.25rem;padding-block:1.8rem}
   h1 {font-size:clamp(2.75rem,11vw,4.25rem)}
   .intro {margin-top:.85rem}
@@ -633,3 +633,9 @@ main > header::before, main > .skills::before, main > .background::before {
 .terminal-name[data-monitor-off] .terminal-signal span {animation:none}
 .terminal-name[data-monitor-off] .terminal-screen::before,
 .terminal-name[data-monitor-off] .terminal-screen::after {opacity:0;animation:none}
+
+.references {position:relative;margin-top:2.1rem}
+.references-intro {color:var(--muted)}
+.reference-list {list-style:none;margin:.85rem 0 0;padding:0}
+.reference-list li {display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem .75rem}
+.reference-list a {font-weight:600;text-decoration-color:var(--accent)}
