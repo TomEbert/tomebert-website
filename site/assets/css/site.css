@@ -633,3 +633,6 @@ main > header::before, main > .skills::before, main > .background::before {
 .terminal-name[data-monitor-off] .terminal-signal span {animation:none}
 .terminal-name[data-monitor-off] .terminal-screen::before,
 .terminal-name[data-monitor-off] .terminal-screen::after {opacity:0;animation:none}
+
+.skills-intro {color:var(--muted);margin-bottom:.85rem}
+.skill a {text-decoration-color:var(--accent)}
