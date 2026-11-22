@@ -6,8 +6,9 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="referrer" content="no-referrer">
 <title>Tom Ebert · AI &amp; Data</title>
-<link rel="icon" href="./favicon-32.png" type="image/png" sizes="32x32">
-<link rel="stylesheet" href="site.css">
+<link rel="icon" href="./te-icon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="./te-touch-icon.png" sizes="180x180">
+<link rel="stylesheet" href="motion.css">
 </head>
 <body>
 <main>
@@ -18,12 +19,15 @@
 <header>
 <div><h1>Tom Ebert</h1><p class="field">AI &amp; Data Consultant</p><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p>
 <p class="current"><span data-en="Currently">Aktuell</span><strong>INFOMOTION</strong></p>
+<div class="motion-row">
 <div class="data-flow" aria-hidden="true">
   <span class="data-flow-input"><i></i><i></i><i></i></span>
   <span class="data-flow-track"></span>
   <span class="data-flow-node"></span>
   <span class="data-flow-track"></span>
   <span class="data-flow-output"><i></i><i></i><i></i><i></i></span>
+</div>
+<button class="motion-toggle" type="button" aria-pressed="false" aria-label="Daueranimation pausieren" data-en-label="Pause ambient animation" hidden></button>
 </div>
 </div>
 <img class="portrait" src="tom-ebert.webp" width="800" height="1199" alt="Tom Ebert bei einem Vortrag" data-en-alt="Tom Ebert giving a talk">
@@ -79,6 +83,13 @@ themeToggle.addEventListener('click', () => {
 deviceTheme.addEventListener('change', updateThemeButton);
 updateThemeButton();
 themeToggle.hidden = false;
+
+const motionToggle = document.querySelector(".motion-toggle");
+motionToggle.addEventListener("click", () => {
+  const paused = root.toggleAttribute("data-motion-paused");
+  motionToggle.setAttribute("aria-pressed", String(paused));
+});
+motionToggle.hidden = false;
 
 const buttons = Array.from(document.querySelectorAll('.language button'));
 

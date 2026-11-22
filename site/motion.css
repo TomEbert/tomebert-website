@@ -194,3 +194,68 @@ nav::after {
   to {opacity:1;clip-path:inset(0);transform:none}
 }
 @keyframes section-in {from {opacity:.55;transform:translateY(.55rem)}}
+
+.motion-row {
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  margin-top:1.35rem;
+}
+.motion-row .data-flow {margin-top:0}
+.motion-toggle {
+  flex:0 0 2.75rem;
+  block-size:2.75rem;
+  border:1px solid var(--line);
+  border-radius:50%;
+  background:var(--surface);
+  color:var(--muted);
+  cursor:pointer;
+}
+.motion-toggle:hover {color:var(--accent)}
+.motion-toggle::before {
+  content:"";
+  display:block;
+  width:.65rem;
+  height:.8rem;
+  margin:auto;
+  border-inline:2px solid currentColor;
+}
+.motion-toggle[aria-pressed="true"]::before {
+  width:0;
+  height:0;
+  border:0;
+  border-block:.4rem solid transparent;
+  border-inline-start:.65rem solid currentColor;
+}
+@media (prefers-reduced-motion:reduce) {
+  .motion-toggle {display:none}
+}
+@media (prefers-reduced-motion:no-preference) {
+  .data-flow {animation:grid-drift 12s linear infinite}
+  .data-flow-track::before {
+    position:absolute;
+    z-index:1;
+    inset:-1px auto -1px 0;
+    width:28%;
+    content:"";
+    background:linear-gradient(90deg,transparent,var(--accent));
+    animation:ambient-signal 6s ease-in-out 1.8s infinite both;
+  }
+  .data-flow-track:nth-child(4)::before {animation-delay:2.55s}
+  .data-flow-output {
+    animation:ambient-chart 6s ease-in-out 3.05s infinite both;
+  }
+  :root[data-motion-paused] .data-flow,
+  :root[data-motion-paused] .data-flow-track::before,
+  :root[data-motion-paused] .data-flow-output {animation-play-state:paused}
+}
+@keyframes grid-drift {to {background-position:16px 0}}
+@keyframes ambient-signal {
+  0% {left:0;opacity:0}
+  9% {opacity:.85}
+  25%,100% {left:72%;opacity:0}
+}
+@keyframes ambient-chart {
+  0%,32%,100% {opacity:1}
+  16% {opacity:.56}
+}
