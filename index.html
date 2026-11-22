@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tom Ebert · AI &amp; Data</title>
+<style>
+:root {color-scheme: light; --paper:#f5f5ef; --ink:#191b17; --blue:#203bbe; --rule:#a8aaa1}
+* {box-sizing:border-box}
+body {margin:0; color:var(--ink); background:var(--paper); font:1rem/1.5 system-ui,sans-serif}
+main {width:min(66rem,100% - 3rem); margin:0 auto 3rem}
+nav { flex-wrap:wrap;display:flex; justify-content:space-between; gap:1rem; border-bottom:1px solid var(--ink); padding:1rem 0; font-size:.9rem}
+.nav-links,.language {display:inline-flex; align-items:center; gap:.65rem}
+.language {border-left:1px solid var(--rule); padding-left:.65rem}
+.language button {font:inherit; cursor:pointer; color:var(--blue); border:0; background:transparent; padding:.15rem .25rem}
+.language button[aria-pressed="true"] {background:var(--blue);color:white}
+a {color:var(--blue); text-underline-offset:.23em}
+a:focus-visible {outline:2px solid var(--blue); outline-offset:4px}
+header {display:grid; grid-template-columns:minmax(0,1fr) 14rem; align-items:end; column-gap:2rem; padding:clamp(2.5rem,7vw,5rem) 0 clamp(2.5rem,6vw,4rem)}
+h1,h2,p,dl,dd {margin:0}
+h1 {font-size:clamp(3.3rem,9vw,7rem); line-height:.92; letter-spacing:-.08em; margin-left:-.055em}
+.field {font:italic clamp(1.8rem,4vw,3.05rem)/1.1 Georgia,serif; color:var(--blue); margin-top:.6rem}
+.hello {font-size:1.05rem; margin-bottom:.65rem}
+.intro {max-width:49ch; margin-top:1rem}
+.personal {border-top:1px solid var(--rule); padding-top:1rem}
+.current {border-left:3px solid var(--blue); padding-left:1rem}
+.current span {display:block; color:var(--blue); font-size:.88rem; margin-bottom:.2rem}
+h2 {font-size:.9rem; font-weight:650; margin-bottom:.65rem}
+dl {border-top:2px solid var(--blue)}
+.skill,.history {display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.65fr); gap:.4rem 2rem}
+.skill {border-bottom:1px solid var(--rule); padding:1rem 0; align-items:baseline}
+dt {color:var(--blue); font-weight:680; font-size:clamp(1.1rem,2.25vw,1.45rem); letter-spacing:-.035em; line-height:1.2}
+.history {margin-top:1.6rem; align-items:baseline}
+.history h2 {margin:0}
+.history p {max-width:52ch}
+@media(max-width:620px) {
+  main {width:calc(100% - 2rem)}
+  header,.skill,.history {grid-template-columns:1fr}
+  header {row-gap:1.35rem}
+}
+</style>
+</head>
+<body>
+<main>
+<nav aria-label="Kontakt und Sprache" data-en-label="Contact and language"><span>tomebert.de</span><div class="nav-links"><a href="https://www.linkedin.com/in/tom-ebert/">LinkedIn</a><div class="language" role="group" aria-label="Sprache" data-en-label="Language"><button type="button" lang="de" aria-label="Deutsch" aria-pressed="true">DE</button><button type="button" lang="en" aria-label="English" aria-pressed="false">EN</button></div></div></nav>
+<header>
+<div><p class="hello" data-en="Hi, I’m">Hi, ich bin</p><h1>Tom Ebert</h1><p class="field">AI &amp; Data</p><p class="intro" data-en="I started out building iOS apps. These days I build AI prototypes and help ship changes to data pipelines safely.">Angefangen habe ich mit iOS-Apps. Heute baue ich KI-Prototypen und kümmere mich darum, dass Änderungen an Datenpipelines sauber in Produktion kommen.</p></div>
+<p class="current"><span data-en="Currently">Aktuell</span><strong style="font-weight:inherit" data-en="AI Consultant at INFOMOTION">AI Consultant bei INFOMOTION</strong></p>
+</header>
+<section aria-labelledby="skills">
+<h2 id="skills" data-en="What I do">Schwerpunkte</h2>
+<dl>
+<div class="skill"><dt data-en="AI applications">KI-Anwendungen</dt><dd data-en="Build prototypes with Claude and connect tools and data sources through MCP.">Prototypen mit Claude entwickeln und Tools und Datenquellen über MCP anbinden.</dd></div>
+<div class="skill"><dt>Data Engineering</dt><dd data-en="Build data models and SQL transformations with Snowflake and dbt.">Datenmodelle und SQL-Transformationen mit Snowflake und dbt entwickeln.</dd></div>
+<div class="skill"><dt data-en="CI/CD for data pipelines">CI/CD für Datenpipelines</dt><dd data-en="Automate pull request checks, prepare releases, and deploy with GitHub Actions.">Pull Requests automatisch prüfen, Releases vorbereiten und Deployments mit GitHub Actions ausrollen.</dd></div>
+</dl>
+</section>
+<section class="history" aria-labelledby="history">
+<h2 id="history" data-en="Background">Werdegang</h2>
+<p data-en="B.Sc. in Data Science, with earlier studies in business informatics. Three years in native iOS development and one year in business intelligence for a banking app.">B.Sc. Data Science, davor Wirtschaftsinformatik. Drei Jahre native iOS-Entwicklung und ein Jahr Business Intelligence für eine Banking-App.</p>
+</section>
+<section class="history personal" aria-labelledby="privat">
+<h2 id="privat" data-en="Away from my desk">Abseits vom Rechner</h2>
+<p data-en="I love cooking and, if you ask me, I’m pretty good at it. In winter I’m out skiing, and in summer I head to Lake Constance to sail.">Ich koche leidenschaftlich gern und, wie ich finde, ziemlich gut. Im Winter zieht’s mich auf die Ski, im Sommer zum Segeln an den Bodensee.</p>
+</section>
+</main>
+<script>
+const translations = Array.from(document.querySelectorAll('[data-en], [data-en-label]'), element => {
+  const attribute = element.hasAttribute('data-en-label') ? 'aria-label' : null;
+  return {
+    element,
+    attribute,
+    de: attribute ? element.getAttribute(attribute) : element.textContent,
+    en: attribute ? element.dataset.enLabel : element.dataset.en
+  };
+});
+const buttons = Array.from(document.querySelectorAll('.language button'));
+
+function setLanguage(language) {
+  document.documentElement.lang = language;
+  for (const { element, attribute, ...text } of translations) {
+    if (attribute) element.setAttribute(attribute, text[language]);
+    else element.textContent = text[language];
+  }
+  for (const button of buttons) {
+    button.setAttribute('aria-pressed', String(button.lang === language));
+  }
+}
+
+for (const button of buttons) {
+  button.addEventListener('click', () => setLanguage(button.lang));
+}
+</script>
+</body>
+</html>
