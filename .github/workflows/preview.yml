@@ -25,5 +25,31 @@ jobs:
           if-no-files-found: error
           retention-days: 7
       - name: Explain how to open the preview
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
+          if [[ "$PR_NUMBER" =~ ^[0-9]+$ ]]; then
+            printf '[Open temporary GitHub Pages preview](https://tomebert.github.io/tomebert-previews/pr-%s/)\n\n' "$PR_NUMBER" >> "$GITHUB_STEP_SUMMARY"
+          fi
           echo 'Download site-preview from this run and extract it. Serve the extracted directory on a local HTTP server.' >> "$GITHUB_STEP_SUMMARY"
+
+  link:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Add the temporary preview link once
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          [[ "$PR_NUMBER" =~ ^[0-9]+$ ]]
+          marker='<!-- isolated-pages-preview -->'
+          endpoint="repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments"
+          existing=$(gh api --paginate "$endpoint" --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | startswith("<!-- isolated-pages-preview -->"))) | .id')
+          if [[ -z "$existing" ]]; then
+            body=$(printf '%s\n[Temporäre Website-Vorschau](https://tomebert.github.io/tomebert-previews/pr-%s/) · Verfügbar nach dem nächsten Sync.' "$marker" "$PR_NUMBER")
+            gh api --silent --method POST "$endpoint" -f body="$body"
+          fi
