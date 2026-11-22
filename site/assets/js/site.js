@@ -15,6 +15,7 @@ const emailAddress = emailUser + '@' + emailDomain;
 emailLink.href = 'mailto:' + emailAddress;
 emailLink.textContent = emailAddress;
 emailLink.setAttribute('aria-label', emailAddress);
+emailLink.hidden = false;
 const themeToggle = document.querySelector('.theme-toggle');
 const deviceTheme = window.matchMedia('(prefers-color-scheme: dark)');
 const root = document.documentElement;
