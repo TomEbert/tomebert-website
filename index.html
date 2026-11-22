@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tom Ebert · AI &amp; Data</title>
 <style>
-:root {color-scheme:dark;--bg:#151714;--surface:#1d201b;--ink:#f3f2e9;--muted:#b7bcb0;--line:#42483d;--accent:#d4ef86}
+:root {color-scheme:light dark;--bg:#151714;--surface:#1d201b;--ink:#f3f2e9;--muted:#b7bcb0;--line:#42483d;--accent:#d4ef86;--accent-ink:#191c15}
+@media (prefers-color-scheme: light) {
+  :root {--bg:#f6f7f0;--surface:#e9eddf;--ink:#191e15;--muted:#4c5746;--line:#a7b09e;--accent:#3c571c;--accent-ink:#fff}
+}
 * {box-sizing:border-box}
 body {margin:0;background:var(--bg);color:var(--ink);font:1rem/1.55 system-ui,sans-serif}
 main {width:min(72rem,100% - 3rem);margin:auto}
@@ -18,7 +21,7 @@ nav {justify-content:space-between;border-bottom:1px solid var(--line);min-heigh
 nav>span,.language,.current span {font-family:ui-monospace,monospace}
 .language {gap:.25rem;border:1px solid var(--line);padding:.2rem}
 .language button {font:inherit;color:var(--muted);background:none;border:0;min-width:2.4rem;min-height:2rem;cursor:pointer}
-.language button[aria-pressed=true] {color:#191c15;background:var(--accent)}
+.language button[aria-pressed=true] {color:var(--accent-ink);background:var(--accent)}
 header {display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);align-items:center;gap:clamp(1.5rem,6vw,5rem);padding:clamp(2rem,6vw,5rem) 0}
 h1 {font-size:clamp(3rem,8.3vw,7.6rem);line-height:.91;letter-spacing:-.075em;font-weight:750}
 .field {font-size:clamp(1.2rem,3vw,2.1rem);font-weight:550;color:var(--accent);margin-top:.75rem;letter-spacing:-.035em}
