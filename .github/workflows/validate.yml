@@ -106,3 +106,22 @@ jobs:
 
           print("Asset references passed")
           PY
+
+      - name: Install locked browser-test dependencies
+        working-directory: tests
+        run: npm ci --ignore-scripts
+
+      - name: Test the site in Chrome
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8769 --bind 127.0.0.1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent --output /dev/null http://127.0.0.1:8769/; then
+              break
+            fi
+            sleep 0.2
+          done
+          curl --fail --silent --output /dev/null http://127.0.0.1:8769/
+          npm --prefix ../tests test

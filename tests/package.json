@@ -1,0 +1,10 @@
+{
+  "name": "tomebert-site-checks",
+  "private": true,
+  "dependencies": {
+    "playwright": "1.65.1"
+  },
+  "scripts": {
+    "test": "node smoke.mjs"
+  }
+}
