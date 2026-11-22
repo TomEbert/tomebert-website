@@ -1,6 +1,8 @@
-# tomebert-website
+# Tom Ebert
 
-[View the website](https://tomebert.github.io/tomebert-website/)
+[![CRT-Monogramm TE](site/assets/images/crt-monogram.png)](https://tomebert.de/)
+
+[tomebert.de](https://tomebert.de/)
 
 ## Site layout
 
