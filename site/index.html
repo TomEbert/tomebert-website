@@ -6,30 +6,48 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="referrer" content="no-referrer">
 <title>Tom Ebert · AI &amp; Data</title>
-<link rel="icon" href="./favicon-32.png" type="image/png" sizes="32x32">
-<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="./favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="stylesheet" href="site-retro-monitor.css">
 </head>
 <body>
 <main>
 <nav aria-label="Kontakt und Sprache" data-en-label="Contact and language"><span>tomebert.de</span><div class="nav-links"><a class="email-link" aria-label="E-Mail"></a><a href="https://www.linkedin.com/in/tom-ebert/">LinkedIn</a><span class="location" data-en="Home base: Stuttgart">Homebase: Stuttgart</span><div class="language" role="group" aria-label="Sprache" data-en-label="Language"><button type="button" lang="de" aria-label="Deutsch" aria-pressed="true">DE</button><button type="button" lang="en" aria-label="English" aria-pressed="false">EN</button></div><button class="theme-toggle" type="button" hidden aria-pressed="false" aria-label="Dunkelmodus" data-en-label="Dark mode">
 <svg class="theme-icon theme-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
 <svg class="theme-icon theme-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 14A8.6 8.6 0 0 1 10 3.5a8.6 8.6 0 1 0 10.5 10.5Z"/></svg>
-</button></div></nav>
+</button><button class="motion-toggle" type="button" aria-pressed="false" aria-label="Animationen pausieren" data-en-label="Pause animations" hidden></button></div></nav>
 <header>
-<div><h1>Tom Ebert</h1><p class="field">AI &amp; Data Consultant</p><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p>
-<p class="current"><span data-en="Currently">Aktuell</span><strong>INFOMOTION</strong></p></div>
+<div><div class="terminal-name"><div class="terminal-screen" id="terminal-screen">
+<span class="terminal-path" aria-hidden="true">~/profile</span>
+<h1><span class="terminal-prompt" aria-hidden="true">❯</span>Tom Ebert<span class="terminal-caret" aria-hidden="true"></span></h1>
+<p class="field">AI &amp; Data Consultant</p>
+<span class="terminal-signal" aria-hidden="true"></span>
+</div>
+<div class="terminal-bezel"><span class="terminal-vents" aria-hidden="true"></span><button class="terminal-power" type="button" aria-label="Monitor" aria-controls="terminal-screen" aria-pressed="true" hidden></button></div>
+</div><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p>
+<p class="current"><span data-en="Currently">Aktuell</span><strong>INFOMOTION</strong></p>
+</div>
+<figure class="portrait-frame">
 <img class="portrait" src="tom-ebert.webp" width="800" height="1199" alt="Tom Ebert bei einem Vortrag" data-en-alt="Tom Ebert giving a talk">
+<button class="portrait-trigger" type="button" aria-label="Lichtfunken am Bühnenfoto auslösen" data-en-label="Trigger sparks on the stage photo" hidden></button>
+<span class="portrait-signal" aria-hidden="true"></span>
+</figure>
 </header>
 <section class="skills" aria-labelledby="skills">
 <h2 id="skills" data-en="What I do">Was ich mache</h2>
-<details class="skill" name="skills" open><summary><span data-en="AI applications">KI-Anwendungen</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I build prototypes with Claude and connect tools and data sources through MCP.">Ich baue Prototypen mit Claude und schließe Tools und Datenquellen über MCP an.</p></details>
-<details class="skill" name="skills"><summary><span>Data Engineering</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I model data in Snowflake and write SQL transformations with dbt.">Ich modelliere Daten in Snowflake und schreibe SQL-Transformationen mit dbt.</p></details>
-<details class="skill" name="skills"><summary><span data-en="CI/CD for data pipelines">CI/CD für Datenpipelines</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I use GitHub Actions to automate PR checks, releases, and deployments.">Mit GitHub Actions automatisiere ich PR-Checks, Releases und Deployments.</p></details>
+<details class="skill" name="skills" open><summary><span data-en="Build AI prototypes">KI-Prototypen bauen</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I build prototypes with Claude and connect tools and data sources through MCP.">Ich baue Prototypen mit Claude und schließe Tools und Datenquellen über MCP an.</p></details>
+<details class="skill" name="skills"><summary><span data-en="Model data">Daten modellieren</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I model data in Snowflake and write SQL transformations with dbt.">Ich modelliere Daten in Snowflake und schreibe SQL-Transformationen mit dbt.</p></details>
+<details class="skill" name="skills"><summary><span data-en="Automate deployments">Deployments automatisieren</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I use GitHub Actions to automate PR checks, releases, and deployments.">Mit GitHub Actions automatisiere ich PR-Checks, Releases und Deployments.</p><p class="skill-detail">Pull Request → Checks → Deploy</p></details>
 </section>
 <div class="background">
 <section class="history" aria-labelledby="history">
 <h2 id="history" data-en="How I got here">Wie ich hier gelandet bin</h2>
-<p data-en="I studied business informatics before finishing my B.Sc. in Data Science. I spent three years building native iOS apps and a year working in BI for a banking app.">Ich habe erst Wirtschaftsinformatik studiert und dann meinen B.Sc. in Data Science gemacht. Dazu kommen drei Jahre native iOS-Entwicklung und ein Jahr BI für eine Banking-App.</p>
+<ol class="career-path">
+  <li><span data-en="Business informatics">Wirtschaftsinformatik</span><small data-en="University of Stuttgart">Universität Stuttgart</small></li>
+  <li><span data-en="Native iOS apps">Native iOS-Apps</span><small data-en="3 years">3 Jahre</small></li>
+  <li><span>B.Sc. Data Science</span><small data-en="University of Stuttgart">Universität Stuttgart</small></li>
+  <li><span>Banking BI</span><small data-en="1 year">1 Jahr</small></li>
+  <li><span>AI &amp; Data Consulting</span><small>INFOMOTION</small></li>
+</ol>
 </section>
 <section class="history personal" aria-labelledby="privat">
 <h2 id="privat" data-en="When I close my laptop">Wenn ich den Laptop zuklappe</h2>
@@ -71,6 +89,62 @@ themeToggle.addEventListener('click', () => {
 deviceTheme.addEventListener('change', updateThemeButton);
 updateThemeButton();
 themeToggle.hidden = false;
+
+const motionToggle = document.querySelector(".motion-toggle");
+motionToggle.addEventListener("click", () => {
+  const paused = root.toggleAttribute("data-motion-paused");
+  motionToggle.setAttribute("aria-pressed", String(paused));
+});
+motionToggle.hidden = false;
+
+const monitorPower = document.querySelector(".terminal-power");
+const monitor = monitorPower.closest(".terminal-name");
+monitorPower.addEventListener("click", () => {
+  const off = monitor.toggleAttribute("data-monitor-off");
+  monitorPower.setAttribute("aria-pressed", String(!off));
+});
+monitorPower.hidden = false;
+
+const portraitButton = document.querySelector(".portrait-trigger");
+const terminalSignal = document.querySelector(".terminal-signal");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let clearBurst;
+
+portraitButton.addEventListener("click", (event) => {
+  const bounds = portraitButton.getBoundingClientRect();
+  const burst = document.createElement("span");
+  burst.className = "portrait-burst";
+  burst.setAttribute("aria-hidden", "true");
+
+  // Keyboard activation starts at the center of the photo.
+  const x = event.detail ? event.clientX - bounds.left : bounds.width / 2;
+  const y = event.detail ? event.clientY - bounds.top : bounds.height / 2;
+  burst.style.left = x + "px";
+  burst.style.top = y + "px";
+
+  if (!reducedMotion.matches && !root.hasAttribute("data-motion-paused")) {
+    const reach = Math.hypot(bounds.width, bounds.height) * .48;
+    burst.style.setProperty("--reach", reach + "px");
+    for (let index = 0; index < 72; index++) {
+      const spark = document.createElement("i");
+      const angle = index * 137.5 + Math.random() * 12;
+      spark.style.setProperty("--angle", angle + "deg");
+      spark.style.setProperty("--distance", reach * (.15 + Math.random() * .85) + "px");
+      spark.style.setProperty("--duration", 520 + Math.random() * 430 + "ms");
+      spark.style.setProperty("--delay", index % 3 * 65 + "ms");
+      burst.append(spark);
+    }
+  }
+
+  portraitButton.replaceChildren(burst);
+  terminalSignal.replaceChildren(document.createElement("span"));
+  window.clearTimeout(clearBurst);
+  clearBurst = window.setTimeout(() => {
+    burst.remove();
+    terminalSignal.replaceChildren();
+  }, 1200);
+});
+portraitButton.hidden = false;
 
 const buttons = Array.from(document.querySelectorAll('.language button'));
 
