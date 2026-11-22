@@ -7,7 +7,7 @@
 <meta name="referrer" content="no-referrer">
 <title>Tom Ebert · AI &amp; Data</title>
 <link rel="icon" href="./favicon.ico" sizes="16x16 32x32 48x48">
-<link rel="stylesheet" href="site-interface.css">
+<link rel="stylesheet" href="site-circuit.css">
 </head>
 <body>
 <main>
@@ -18,25 +18,11 @@
 <header>
 <div><h1>Tom Ebert</h1><p class="field">AI &amp; Data Consultant</p><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p>
 <p class="current"><span data-en="Currently">Aktuell</span><strong>INFOMOTION</strong></p>
-<div class="pipeline">
-<div class="motion-row">
-<div class="data-flow" aria-hidden="true">
-  <span class="data-flow-input"><i></i><i></i><i></i></span>
-  <span class="data-flow-track"></span>
-  <span class="data-flow-node"></span>
-  <span class="data-flow-track"></span>
-  <span class="data-flow-output"><i></i><i></i><i></i><i></i></span>
 </div>
-</div>
-<div class="pipeline-controls">
-  <div class="pipeline-stage"><span>Input</span><code>A B A C B</code></div>
-  <button class="pipeline-transform" type="button" aria-pressed="false" hidden>Transform</button>
-  <div class="pipeline-stage pipeline-output"><span>Output</span><output><code id="pipeline-values">A B A C B</code></output></div>
-</div>
-<p class="pipeline-caption" data-en="Transform removes duplicate values.">Transform entfernt doppelte Werte.</p>
-</div>
-</div>
+<figure class="portrait-frame">
 <img class="portrait" src="tom-ebert.webp" width="800" height="1199" alt="Tom Ebert bei einem Vortrag" data-en-alt="Tom Ebert giving a talk">
+<span class="portrait-signal" aria-hidden="true"></span>
+</figure>
 </header>
 <section class="skills" aria-labelledby="skills">
 <h2 id="skills" data-en="What I do">Was ich mache</h2>
@@ -44,10 +30,26 @@
 <details class="skill" name="skills"><summary><span>Data Engineering</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I model data in Snowflake and write SQL transformations with dbt.">Ich modelliere Daten in Snowflake und schreibe SQL-Transformationen mit dbt.</p><p class="skill-detail">Snowflake · SQL · dbt</p></details>
 <details class="skill" name="skills"><summary><span data-en="CI/CD for data pipelines">CI/CD für Datenpipelines</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I use GitHub Actions to automate PR checks, releases, and deployments.">Mit GitHub Actions automatisiere ich PR-Checks, Releases und Deployments.</p><p class="skill-detail">Pull Request → Checks → Deploy</p></details>
 </section>
+<section class="commit-demo" aria-labelledby="commit-title">
+  <h2 id="commit-title" data-en="What does this commit rebuild?">Was baut dieser Commit neu?</h2>
+  <p data-en="In this dbt example, stg_orders has changed. The + selector includes the models that depend on it.">In diesem dbt-Beispiel wurde stg_orders geändert. Der +-Selektor nimmt die davon abhängigen Modelle mit.</p>
+  <ul class="model-graph" id="model-graph">
+    <li><code>stg_orders</code><span aria-hidden="true">→</span><code>fct_orders</code><span aria-hidden="true">→</span><code>mart_revenue</code></li>
+    <li><code>stg_customers</code><span aria-hidden="true">→</span><code>dim_customers</code></li>
+  </ul>
+  <button class="commit-button" type="button" aria-controls="model-graph" aria-pressed="false" hidden><code>dbt build --select stg_orders+</code></button>
+  <p class="commit-status" role="status"></p>
+</section>
 <div class="background">
 <section class="history" aria-labelledby="history">
 <h2 id="history" data-en="How I got here">Wie ich hier gelandet bin</h2>
-<p data-en="I studied business informatics before finishing my B.Sc. in Data Science. I spent three years building native iOS apps and a year working in BI for a banking app.">Ich habe erst Wirtschaftsinformatik studiert und dann meinen B.Sc. in Data Science gemacht. Dazu kommen drei Jahre native iOS-Entwicklung und ein Jahr BI für eine Banking-App.</p>
+<ol class="career-path">
+  <li><span data-en="Business informatics">Wirtschaftsinformatik</span></li>
+  <li><span>B.Sc. Data Science</span></li>
+  <li><span data-en="Native iOS apps">Native iOS-Apps</span><small data-en="3 years">3 Jahre</small></li>
+  <li><span>Banking BI</span><small data-en="1 year">1 Jahr</small></li>
+  <li><span>AI &amp; Data Consulting</span><small>INFOMOTION</small></li>
+</ol>
 </section>
 <section class="history personal" aria-labelledby="privat">
 <h2 id="privat" data-en="When I close my laptop">Wenn ich den Laptop zuklappe</h2>
@@ -97,22 +99,31 @@ motionToggle.addEventListener("click", () => {
 });
 motionToggle.hidden = false;
 
-const transform = document.querySelector(".pipeline-transform");
-const pipelineValues = document.querySelector("#pipeline-values");
-const inputValues = pipelineValues.textContent.trim().split(/\s+/);
+const commitButton = document.querySelector(".commit-button");
+const commitStatus = document.querySelector(".commit-status");
 
-transform.addEventListener("click", () => {
-  const active = transform.getAttribute("aria-pressed") !== "true";
-  const values = active ? [...new Set(inputValues)] : inputValues;
-  pipelineValues.textContent = values.join(" ");
-  transform.setAttribute("aria-pressed", String(active));
+function updateCommitStatus() {
+  const active = commitButton.getAttribute("aria-pressed") === "true";
+  const selected = {
+    de: "3 Modelle ausgewählt. Die Kundenmodelle bleiben unverändert.",
+    en: "3 models selected. The customer models are unaffected."
+  };
+  commitStatus.textContent = active ? selected[root.lang] : "";
+}
+
+commitButton.addEventListener("click", () => {
+  const active = commitButton.getAttribute("aria-pressed") !== "true";
+  commitButton.setAttribute("aria-pressed", String(active));
+  document.querySelector(".model-graph").toggleAttribute("data-selected", active);
+  updateCommitStatus();
 });
-transform.hidden = false;
+commitButton.hidden = false;
 
 const buttons = Array.from(document.querySelectorAll('.language button'));
 
 function setLanguage(language) {
   document.documentElement.lang = language;
+  updateCommitStatus();
   for (const { element, attribute, ...text } of translations) {
     if (attribute) element.setAttribute(attribute, text[language]);
     else element.textContent = text[language];
