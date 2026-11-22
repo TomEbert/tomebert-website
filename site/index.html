@@ -7,7 +7,7 @@
 <meta name="referrer" content="no-referrer">
 <title>Tom Ebert · AI &amp; Data</title>
 <link rel="icon" href="./favicon.ico" sizes="16x16 32x32 48x48">
-<link rel="stylesheet" href="site-portrait.css">
+<link rel="stylesheet" href="site-sparks.css">
 </head>
 <body>
 <main>
@@ -21,7 +21,7 @@
 </div>
 <figure class="portrait-frame">
 <img class="portrait" src="tom-ebert.webp" width="800" height="1199" alt="Tom Ebert bei einem Vortrag" data-en-alt="Tom Ebert giving a talk">
-<button class="portrait-trigger" type="button" aria-label="Lichteffekt am Bühnenfoto" data-en-label="Stage photo lighting effect" aria-pressed="false" hidden></button>
+<button class="portrait-trigger" type="button" aria-label="Lichtfunken am Bühnenfoto auslösen" data-en-label="Trigger sparks on the stage photo" hidden></button>
 <span class="portrait-signal" aria-hidden="true"></span>
 </figure>
 </header>
@@ -91,9 +91,35 @@ motionToggle.addEventListener("click", () => {
 motionToggle.hidden = false;
 
 const portraitButton = document.querySelector(".portrait-trigger");
-portraitButton.addEventListener("click", () => {
-  const active = portraitButton.getAttribute("aria-pressed") !== "true";
-  portraitButton.setAttribute("aria-pressed", String(active));
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let clearBurst;
+
+portraitButton.addEventListener("click", (event) => {
+  const bounds = portraitButton.getBoundingClientRect();
+  const burst = document.createElement("span");
+  burst.className = "portrait-burst";
+  burst.setAttribute("aria-hidden", "true");
+
+  // Keyboard activation starts at the center of the photo.
+  const x = event.detail ? event.clientX - bounds.left : bounds.width / 2;
+  const y = event.detail ? event.clientY - bounds.top : bounds.height / 2;
+  burst.style.left = x + "px";
+  burst.style.top = y + "px";
+
+  if (!reducedMotion.matches && !root.hasAttribute("data-motion-paused")) {
+    for (let index = 0; index < 20; index++) {
+      const spark = document.createElement("i");
+      const angle = index * 18 + Math.random() * 12;
+      spark.style.setProperty("--angle", angle + "deg");
+      spark.style.setProperty("--distance", 36 + Math.random() * 105 + "px");
+      spark.style.setProperty("--duration", 360 + Math.random() * 260 + "ms");
+      burst.append(spark);
+    }
+  }
+
+  portraitButton.replaceChildren(burst);
+  window.clearTimeout(clearBurst);
+  clearBurst = window.setTimeout(() => burst.remove(), 700);
 });
 portraitButton.hidden = false;
 
