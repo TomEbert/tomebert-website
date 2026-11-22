@@ -49,10 +49,14 @@ try {
     await portrait.press('Enter');
     assert.equal(await page.locator('.portrait-burst i').count(), reducedMotion ? 0 : 72);
     const motion = page.locator('.motion-toggle');
-    await motion.press('Space');
-    assert.equal(await motion.getAttribute('aria-pressed'), 'true');
-    await portrait.press('Enter');
-    assert.equal(await page.locator('.portrait-burst i').count(), 0);
+    if (reducedMotion) {
+      assert.equal(await motion.isVisible(), false);
+    } else {
+      await motion.press('Space');
+      assert.equal(await motion.getAttribute('aria-pressed'), 'true');
+      await portrait.press('Enter');
+      assert.equal(await page.locator('.portrait-burst i').count(), 0);
+    }
     assert.deepEqual(errors, []);
     await page.close();
   }
