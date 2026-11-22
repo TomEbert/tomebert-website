@@ -8,66 +8,14 @@
 <title>Tom Ebert · AI &amp; Data</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="favicon.svg">
-<style>
-:root {color-scheme:light dark;--bg:#151714;--surface:#1d201b;--ink:#f3f2e9;--muted:#b7bcb0;--line:#42483d;--accent:#d4ef86;--accent-ink:#191c15}
-:root[data-theme="light"] {--bg:#f6f7f0;--surface:#e9eddf;--ink:#191e15;--muted:#4c5746;--line:#a7b09e;--accent:#3c571c;--accent-ink:#fff}
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme]) {--bg:#f6f7f0;--surface:#e9eddf;--ink:#191e15;--muted:#4c5746;--line:#a7b09e;--accent:#3c571c;--accent-ink:#fff}
-}
-:root[data-theme="light"] {color-scheme:light}
-:root[data-theme="dark"] {color-scheme:dark}
-* {box-sizing:border-box}
-body {margin:0;background:var(--bg);color:var(--ink);font:1rem/1.55 system-ui,sans-serif}
-main {width:min(72rem,100% - 3rem);margin:auto}
-h1,h2,p {margin:0}
-a {color:inherit;text-underline-offset:.24em}
-a:hover {color:var(--accent)}
-:focus-visible {outline:2px solid var(--accent);outline-offset:5px}
-nav,.nav-links,.language {display:flex;align-items:center;gap:1rem}
-nav {justify-content:space-between;border-bottom:1px solid var(--line);min-height:4.25rem;flex-wrap:wrap;font-size:.875rem}
-nav>span,.language,.current span,.location {font-family:ui-monospace,monospace}
-.location {color:var(--muted)}
-.language {gap:.25rem;border:1px solid var(--line);padding:.2rem}
-.theme-toggle {font:inherit;color:inherit;background:none;border:1px solid var(--line);padding:.45rem .55rem;cursor:pointer}
-.nav-links {flex-wrap:wrap}
-.language button {font:inherit;color:var(--muted);background:none;border:0;min-width:2.4rem;min-height:2rem;cursor:pointer}
-.language button[aria-pressed=true] {color:var(--accent-ink);background:var(--accent)}
-header {display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);align-items:center;gap:clamp(1.5rem,6vw,5rem);padding:clamp(2rem,6vw,5rem) 0}
-h1 {font-size:clamp(3rem,8.3vw,7.6rem);line-height:.91;letter-spacing:-.075em;font-weight:750}
-.field {font-size:clamp(1.2rem,3vw,2.1rem);font-weight:550;color:var(--accent);margin-top:.75rem;letter-spacing:-.035em}
-.intro {margin-top:1.3rem;max-width:40ch;color:var(--muted)}
-.current {margin-top:1.8rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem .75rem;font-size:.9rem}
-.current span {color:var(--muted)}
-.portrait {display:block;width:100%;height:auto;aspect-ratio:5/6;object-fit:cover;object-position:50% 33%;border-bottom:3px solid var(--accent)}
-.skills {border-top:1px solid var(--line);padding-top:1rem}
-h2 {font-size:1rem;font-weight:650}
-.skills h2 {color:var(--muted);margin-bottom:.85rem}
-.skill {border-bottom:1px solid var(--line)}
-summary {display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.8rem .9rem;cursor:pointer;list-style:none;font-size:clamp(1.15rem,2.4vw,1.6rem);font-weight:630;letter-spacing:-.035em;transition:background-color .18s,color .18s}
-summary::-webkit-details-marker {display:none}
-summary:hover,.skill[open] {background:var(--surface)}
-.skill[open] summary {color:var(--accent)}
-.toggle {font:1.2rem/1 ui-monospace,monospace;color:var(--accent)}
-.toggle::before {content:"+"}
-.skill[open] .toggle::before {content:"−"}
-.skill p {padding:0 .9rem 1rem;max-width:65ch;color:var(--muted)}
-.background {display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin:2.1rem 0 3rem}
-.history {border-top:1px solid var(--line);padding-top:.8rem}
-.history h2 {margin-bottom:.45rem}
-.history p {color:var(--muted)}
-.personal {border-top-color:var(--accent)}
-@media(max-width:630px) {
- main {width:calc(100% - 2rem)}
- header,.background {grid-template-columns:1fr}
- .portrait {max-width:27rem}
- .background {gap:1.3rem}
-}
-@media(prefers-reduced-motion:reduce) {summary {transition:none}}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <main>
-<nav aria-label="Kontakt und Sprache" data-en-label="Contact and language"><span>tomebert.de</span><div class="nav-links"><a class="email-link" aria-label="E-Mail"></a><a href="https://www.linkedin.com/in/tom-ebert/">LinkedIn</a><span class="location" data-en="Home base Stuttgart">Homebase: Stuttgart</span><div class="language" role="group" aria-label="Sprache" data-en-label="Language"><button type="button" lang="de" aria-label="Deutsch" aria-pressed="true">DE</button><button type="button" lang="en" aria-label="English" aria-pressed="false">EN</button></div><button class="theme-toggle" type="button" hidden aria-pressed="false" data-en="Dark mode">Dunkelmodus</button></div></nav>
+<nav aria-label="Kontakt und Sprache" data-en-label="Contact and language"><span>tomebert.de</span><div class="nav-links"><a class="email-link" aria-label="E-Mail"></a><a href="https://www.linkedin.com/in/tom-ebert/">LinkedIn</a><span class="location" data-en="Home base: Stuttgart">Homebase: Stuttgart</span><div class="language" role="group" aria-label="Sprache" data-en-label="Language"><button type="button" lang="de" aria-label="Deutsch" aria-pressed="true">DE</button><button type="button" lang="en" aria-label="English" aria-pressed="false">EN</button></div><button class="theme-toggle" type="button" hidden aria-pressed="false" aria-label="Dunkelmodus" data-en-label="Dark mode">
+<svg class="theme-icon theme-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+<svg class="theme-icon theme-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 14A8.6 8.6 0 0 1 10 3.5a8.6 8.6 0 1 0 10.5 10.5Z"/></svg>
+</button></div></nav>
 <header>
 <div><h1>Tom Ebert</h1><p class="field">AI &amp; Data Consultant</p><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p>
 <p class="current"><span data-en="Currently">Aktuell</span><strong>INFOMOTION</strong></p></div>
