@@ -5,78 +5,68 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tom Ebert · AI &amp; Data</title>
 <style>
-:root {color-scheme: light; --paper:#f5f5ef; --ink:#191b17; --blue:#203bbe; --rule:#a8aaa1}
+:root {color-scheme:dark;--bg:#151714;--surface:#1d201b;--ink:#f3f2e9;--muted:#b7bcb0;--line:#42483d;--accent:#d4ef86}
 * {box-sizing:border-box}
-body {margin:0; color:var(--ink); background:var(--paper); font:1rem/1.5 system-ui,sans-serif}
-main {width:min(66rem,100% - 3rem); margin:0 auto 3rem}
-nav { flex-wrap:wrap;display:flex; justify-content:space-between; gap:1rem; border-bottom:1px solid var(--ink); padding:1rem 0; font-size:.9rem}
-.nav-links,.language {display:inline-flex; align-items:center; gap:.65rem}
-.language {border-left:1px solid var(--rule); padding-left:.65rem}
-.language button {font:inherit; cursor:pointer; color:var(--blue); border:0; background:transparent; padding:.15rem .25rem}
-.language button[aria-pressed="true"] {background:var(--blue);color:white}
-a {color:var(--blue); text-underline-offset:.23em}
-a:focus-visible {outline:2px solid var(--blue); outline-offset:4px}
-header {display:grid; grid-template-columns:minmax(0,1fr) 14rem; align-items:end; column-gap:2rem; padding:clamp(2.5rem,7vw,5rem) 0 clamp(2.5rem,6vw,4rem)}
-h1,h2,p,dl,dd {margin:0}
-h1 {font-size:clamp(3.3rem,9vw,7rem); line-height:.92; letter-spacing:-.08em; margin-left:-.055em}
-.field {font:italic clamp(1.8rem,4vw,3.05rem)/1.1 Georgia,serif; color:var(--blue); margin-top:.6rem}
-.hello {font-size:1.05rem; margin-bottom:.65rem}
-.intro {max-width:49ch; margin-top:1rem}
-.personal {border-top:1px solid var(--rule); padding-top:1rem}
-.current {border-left:3px solid var(--blue); padding-left:1rem}
-.current span {display:block; color:var(--blue); font-size:.88rem; margin-bottom:.2rem}
-h2 {font-size:.9rem; font-weight:650; margin-bottom:.65rem}
-dl {border-top:2px solid var(--blue)}
-.skill,.history {display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.65fr); gap:.4rem 2rem}
-.skill {border-bottom:1px solid var(--rule); padding:1rem 0; align-items:baseline}
-dt {color:var(--blue); font-weight:680; font-size:clamp(1.1rem,2.25vw,1.45rem); letter-spacing:-.035em; line-height:1.2}
-.history {margin-top:1.6rem; align-items:baseline}
-.history h2 {margin:0}
-.history p {max-width:52ch}
-@media(max-width:620px) {
-  main {width:calc(100% - 2rem)}
-  header,.skill,.history {grid-template-columns:1fr}
-  header {row-gap:1.35rem}
+body {margin:0;background:var(--bg);color:var(--ink);font:1rem/1.55 system-ui,sans-serif}
+main {width:min(72rem,100% - 3rem);margin:auto}
+h1,h2,p {margin:0}
+a {color:inherit;text-underline-offset:.24em}
+a:hover {color:var(--accent)}
+:focus-visible {outline:2px solid var(--accent);outline-offset:5px}
+nav,.nav-links,.language {display:flex;align-items:center;gap:1rem}
+nav {justify-content:space-between;border-bottom:1px solid var(--line);min-height:4.25rem;flex-wrap:wrap;font-size:.875rem}
+nav>span,.language,.current span {font-family:ui-monospace,monospace}
+.language {gap:.25rem;border:1px solid var(--line);padding:.2rem}
+.language button {font:inherit;color:var(--muted);background:none;border:0;min-width:2.4rem;min-height:2rem;cursor:pointer}
+.language button[aria-pressed=true] {color:#191c15;background:var(--accent)}
+header {display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);align-items:center;gap:clamp(1.5rem,6vw,5rem);padding:clamp(2rem,6vw,5rem) 0}
+h1 {font-size:clamp(3rem,8.3vw,7.6rem);line-height:.91;letter-spacing:-.075em;font-weight:750}
+.field {font-size:clamp(1.2rem,3vw,2.1rem);font-weight:550;color:var(--accent);margin-top:.75rem;letter-spacing:-.035em}
+.intro {margin-top:1.3rem;max-width:40ch;color:var(--muted)}
+.current {margin-top:1.8rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem .75rem;font-size:.9rem}
+.current span {color:var(--muted)}
+.portrait {display:block;width:100%;height:auto;aspect-ratio:5/6;object-fit:cover;object-position:50% 33%;border-bottom:3px solid var(--accent)}
+.skills {border-top:1px solid var(--line);padding-top:1rem}
+h2 {font-size:1rem;font-weight:650}
+.skills h2 {color:var(--muted);margin-bottom:.85rem}
+.skill {border-bottom:1px solid var(--line)}
+summary {display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.8rem .9rem;cursor:pointer;list-style:none;font-size:clamp(1.15rem,2.4vw,1.6rem);font-weight:630;letter-spacing:-.035em;transition:background-color .18s,color .18s}
+summary::-webkit-details-marker {display:none}
+summary:hover,.skill[open] {background:var(--surface)}
+.skill[open] summary {color:var(--accent)}
+.toggle {font:1.2rem/1 ui-monospace,monospace;color:var(--accent)}
+.toggle::before {content:"+"}
+.skill[open] .toggle::before {content:"−"}
+.skill p {padding:0 .9rem 1rem;max-width:65ch;color:var(--muted)}
+.background {display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin:2.1rem 0 3rem}
+.history {border-top:1px solid var(--line);padding-top:.8rem}
+.history h2 {margin-bottom:.45rem}
+.history p {color:var(--muted)}
+.personal {border-top-color:var(--accent)}
+@media(max-width:630px) {
+ main {width:calc(100% - 2rem)}
+ header,.background {grid-template-columns:1fr}
+ .portrait {max-width:27rem}
+ .background {gap:1.3rem}
 }
-
-:root {--paper:#f8f7f2; --ink:#181b19; --blue:#243bb1}
-nav {align-items:center}
-header {grid-template-columns:minmax(0,1fr) minmax(12rem,15rem); align-items:center}
-.hello {margin-bottom:1rem; font-weight:600}
-.field {margin-top:.85rem}
-.current {align-self:end; margin-bottom:.25rem}
-.personal {margin-top:2.35rem; padding:1.5rem clamp(1rem,4vw,2.5rem); background:var(--blue); color:white; border:0}
-.personal p {font-family:Georgia,serif; font-size:clamp(1.2rem,2.5vw,1.6rem); line-height:1.35}
-@media(max-width:620px) {
-  header {grid-template-columns:1fr}
-  .personal {gap:.85rem}
-}
-
-header {grid-template-columns:minmax(0,1fr) minmax(12rem,19rem); row-gap:1.35rem}
-header .current {align-self:start; margin:0}
-.portrait {grid-column:2; grid-row:1 / span 2; display:block; width:100%; height:auto; align-self:center}
-@media(max-width:620px) {
-  header {grid-template-columns:1fr}
-  .portrait {grid-column:1; grid-row:auto; width:min(100%,19rem)}
-}
+@media(prefers-reduced-motion:reduce) {summary {transition:none}}
 </style>
 </head>
 <body>
 <main>
 <nav aria-label="Kontakt und Sprache" data-en-label="Contact and language"><span>tomebert.de</span><div class="nav-links"><a href="https://www.linkedin.com/in/tom-ebert/">LinkedIn</a><div class="language" role="group" aria-label="Sprache" data-en-label="Language"><button type="button" lang="de" aria-label="Deutsch" aria-pressed="true">DE</button><button type="button" lang="en" aria-label="English" aria-pressed="false">EN</button></div></div></nav>
 <header>
-<div><p class="hello" data-en="Hi, I’m">Hi, ich bin</p><h1>Tom Ebert</h1><p class="field">AI &amp; Data</p><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p></div>
-<p class="current"><span data-en="Currently">Aktuell</span><strong style="font-weight:inherit" data-en="AI Consultant at INFOMOTION">AI Consultant bei INFOMOTION</strong></p>
+<div><h1>Tom Ebert</h1><p class="field">AI &amp; Data Consultant</p><p class="intro" data-en="I started out building native iOS apps. These days I build AI prototypes and ship changes to data pipelines.">Ich komme aus der iOS-Entwicklung. Heute baue ich KI-Prototypen und bringe Änderungen an Datenpipelines in Produktion.</p>
+<p class="current"><span data-en="Currently">Aktuell</span><strong>INFOMOTION</strong></p></div>
 <img class="portrait" src="tom-ebert.webp" width="800" height="1199" alt="Tom Ebert bei einem Vortrag" data-en-alt="Tom Ebert giving a talk">
 </header>
-<section aria-labelledby="skills">
+<section class="skills" aria-labelledby="skills">
 <h2 id="skills" data-en="What I do">Was ich mache</h2>
-<dl>
-<div class="skill"><dt data-en="AI applications">KI-Anwendungen</dt><dd data-en="I build prototypes with Claude and connect tools and data sources through MCP.">Ich baue Prototypen mit Claude und schließe Tools und Datenquellen über MCP an.</dd></div>
-<div class="skill"><dt>Data Engineering</dt><dd data-en="I model data in Snowflake and write SQL transformations with dbt.">Ich modelliere Daten in Snowflake und schreibe SQL-Transformationen mit dbt.</dd></div>
-<div class="skill"><dt data-en="CI/CD for data pipelines">CI/CD für Datenpipelines</dt><dd data-en="I use GitHub Actions to automate PR checks, releases, and deployments.">Mit GitHub Actions automatisiere ich PR-Checks, Releases und Deployments.</dd></div>
-</dl>
+<details class="skill" name="skills" open><summary><span data-en="AI applications">KI-Anwendungen</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I build prototypes with Claude and connect tools and data sources through MCP.">Ich baue Prototypen mit Claude und schließe Tools und Datenquellen über MCP an.</p></details>
+<details class="skill" name="skills"><summary><span>Data Engineering</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I model data in Snowflake and write SQL transformations with dbt.">Ich modelliere Daten in Snowflake und schreibe SQL-Transformationen mit dbt.</p></details>
+<details class="skill" name="skills"><summary><span data-en="CI/CD for data pipelines">CI/CD für Datenpipelines</span><span class="toggle" aria-hidden="true"></span></summary><p data-en="I use GitHub Actions to automate PR checks, releases, and deployments.">Mit GitHub Actions automatisiere ich PR-Checks, Releases und Deployments.</p></details>
 </section>
+<div class="background">
 <section class="history" aria-labelledby="history">
 <h2 id="history" data-en="How I got here">Wie ich hier gelandet bin</h2>
 <p data-en="I studied business informatics before finishing my B.Sc. in Data Science. I spent three years building native iOS apps and a year working in BI for a banking app.">Ich habe erst Wirtschaftsinformatik studiert und dann meinen B.Sc. in Data Science gemacht. Dazu kommen drei Jahre native iOS-Entwicklung und ein Jahr BI für eine Banking-App.</p>
@@ -85,6 +75,7 @@ header .current {align-self:start; margin:0}
 <h2 id="privat" data-en="When I close my laptop">Wenn ich den Laptop zuklappe</h2>
 <p data-en="I love to cook. And I’d say I’m pretty good at it. I ski in winter and sail in summer.">Ich koche gern. Und ich würde sagen, ziemlich gut. Im Winter steh ich auf Ski, im Sommer geh ich segeln.</p>
 </section>
+</div>
 </main>
 <script>
 const translations = Array.from(document.querySelectorAll('[data-en], [data-en-label], [data-en-alt]'), element => {
